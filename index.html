@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Application Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            position: relative;
+        }
+
+        nav li a {
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            color: #333;
+        }
+
+        nav li:hover .submenu {
+            display: block;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+        }
+
+        .submenu li {
+            display: block;
+        }
+
+        .submenu li a {
+            padding: 10px;
+            color: #666;
+        }
+
+        .submenu li a:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li>
+            <a href="#">Stammdaten</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+                <li><a href="#">Option 3</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Buchen</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Auswertungen</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+                <li><a href="#">Option 3</a></li>
+                <li><a href="#">Option 4</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Import</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Login/Logout</a></li>
+    </ul>
+</nav>
+
+<script>
+    // Simple JavaScript to handle the dropdown behavior
+    let menuItems = document.querySelectorAll('nav li');
+
+    menuItems.forEach(item => {
+        item.addEventListener('mouseover', function() {
+            closeAllSubmenus();
+            let submenu = this.querySelector('.submenu');
+            if (submenu) submenu.style.display = 'block';
+        });
+
+        item.addEventListener('mouseout', function() {
+            closeAllSubmenus();
+        });
+    });
+
+    function closeAllSubmenus() {
+        let submenus = document.querySelectorAll('.submenu');
+        submenus.forEach(submenu => {
+            submenu.style.display = 'none';
+        });
+    }
+</script>
+
+</body>
+</html>
+This code provides a basic dropdown menu structure with minimal styling. You can expand upon this by adding more submenu options, integrating additional styles, or implementing more advanced features as needed.
