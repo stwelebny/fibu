@@ -1,0 +1,32 @@
+Stammdaten
+    Kontenrahmen 1
+    Unternehmensstamm 1 
+    Benutzer 1
+Buchung
+    Einfach 5
+    Mehrwertsteuerautomatik 3
+    Stapel 2
+    EB 1
+Backup=Export als zip File 2
+Restore 1
+OpenID Authentication 3
+Signatur 3
+Signatur verifizieren 1
+Belegupload 3
+Belegdatenerkennung 5
+Bankupload 1
+Buchungsvorschlag
+    Eingangsrechnung 2
+    Barbeleg 2
+    Ausgangsrechnung 2
+    Bank 10
+Buchungsvorschlag update (manuelle Übersteuerung) 1
+Auswertungen
+    G%V 1
+    Bilanz 1
+    Kontoabfrage 1
+    Journalabfrage 1
+    UVA 3
+Manual 1
+
+58
