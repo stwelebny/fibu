@@ -2,6 +2,7 @@ Stammdaten
     Kontenrahmen 1
     Unternehmensstamm 1 
     Benutzer 1
+    Belegkreise 1
 Buchung
     Einfach 5
     Mehrwertsteuerautomatik 3
@@ -30,3 +31,6 @@ Auswertungen
 Manual 1
 
 58
+
+Buchungsatz
+    Belegnummer, Belegdatum, Text, SollKonto, HabenKonto, Betrag, TimeStamp, User 

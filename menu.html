@@ -1,0 +1,60 @@
+<nav>
+    <ul>
+        <li>
+            <a href="#">Stammdaten</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+                <li><a href="#">Option 3</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Buchen</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Auswertungen</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+                <li><a href="#">Option 3</a></li>
+                <li><a href="#">Option 4</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Import</a>
+            <ul class="submenu">
+                <li><a href="#">Option 1</a></li>
+                <li><a href="#">Option 2</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Login/Logout</a></li>
+    </ul>
+</nav>
+
+<script>
+    // Simple JavaScript to handle the dropdown behavior
+    let menuItems = document.querySelectorAll('nav li');
+
+    menuItems.forEach(item => {
+        item.addEventListener('mouseover', function() {
+            closeAllSubmenus();
+            let submenu = this.querySelector('.submenu');
+            if (submenu) submenu.style.display = 'block';
+        });
+
+        item.addEventListener('mouseout', function() {
+            closeAllSubmenus();
+        });
+    });
+
+    function closeAllSubmenus() {
+        let submenus = document.querySelectorAll('.submenu');
+        submenus.forEach(submenu => {
+            submenu.style.display = 'none';
+        });
+    }
+</script>

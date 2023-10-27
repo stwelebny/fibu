@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    position: relative;
+}
+
+nav li a {
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    color: #333;
+}
+
+nav li:hover .submenu {
+    display: block;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+}
+
+.submenu li {
+    display: block;
+}
+
+.submenu li a {
+    padding: 10px;
+    color: #666;
+}
+
+.submenu li a:hover {
+    background-color: #eee;
+}
+
+.form-container {
+    margin: 20px;
+}
+
+form label, form input {
+    margin-bottom: 10px;
+}
+
