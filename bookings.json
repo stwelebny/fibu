@@ -1,0 +1,216 @@
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "150.50",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 13:56:10",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "200.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 13:58:16",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-200.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 14:04:47",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 14:07:52",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 14:11:52",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 14:13:21",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 16:08:35",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2000-12-13",
+	"Belegnummer" : "2",
+	"Betrag" : "67",
+	"HabenKonto" : "5678",
+	"Mandant" : "123",
+	"SollKonto" : "6789",
+	"Text" : "hhjkh",
+	"TimeStamp" : "2023-10-27 16:39:05",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2000-12-13",
+	"Belegnummer" : "2",
+	"Betrag" : "67",
+	"HabenKonto" : "5678",
+	"Mandant" : "123",
+	"SollKonto" : "6789",
+	"Text" : "hhjkh",
+	"TimeStamp" : "2023-10-27 16:39:05",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2000-12-13",
+	"Belegnummer" : "2",
+	"Betrag" : "67",
+	"HabenKonto" : "5678",
+	"Mandant" : "123",
+	"SollKonto" : "6789",
+	"Text" : "hhjkh",
+	"TimeStamp" : "2023-10-27 16:39:05",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2000-12-13",
+	"Belegnummer" : "2",
+	"Betrag" : "78",
+	"HabenKonto" : "079",
+	"Mandant" : "123",
+	"SollKonto" : "67869",
+	"Text" : "hkhk",
+	"TimeStamp" : "2023-10-27 16:43:07",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "1999-12-13",
+	"Belegnummer" : "2",
+	"Betrag" : "6767",
+	"HabenKonto" : "6786",
+	"Mandant" : "123",
+	"SollKonto" : "68768",
+	"Text" : "Donald",
+	"TimeStamp" : "2023-10-27 16:55:30",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-27 17:10:23",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-28 09:16:43",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-28 11:35:27",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-28 11:47:46",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-28 11:51:40",
+	"User" : "exampleUser"
+}
+
+{
+	"Belegdatum" : "2023-10-27",
+	"Belegnummer" : "123456",
+	"Betrag" : "-20.00",
+	"HabenKonto" : "2001",
+	"Mandant" : "MandantName",
+	"SollKonto" : "1001",
+	"Text" : "Some Text",
+	"TimeStamp" : "2023-10-28 11:54:33",
+	"User" : "exampleUser"
+}
+

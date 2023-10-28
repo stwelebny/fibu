@@ -4,23 +4,27 @@ FROM httpd:2.4
 # Update and install necessary tools and libraries
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y iptables && \
+    apt-get install -y iptables g++ build-essential libcgicc-dev libjsoncpp-dev && \
     apt-get clean
 
-# Set up basic firewall rules with iptables
-# Adjust these as per your needs
-RUN iptables -A INPUT -i lo -j ACCEPT
-RUN iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-RUN iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-RUN iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-RUN iptables -A INPUT -j DROP
+RUN find / -name json.h
 
-# For DDoS protection, you'd typically rely on more comprehensive tools or services.
-# For a basic layer of protection, you can use iptables to limit the number of connections:
-RUN iptables -A INPUT -p tcp --dport 80 -m limit --limit 50/minute --limit-burst 200 -j ACCEPT
+VOLUME /fibudata
 
-# Copy your web app's files to the Apache document root
-# COPY ./your-web-app-directory/ /usr/local/apache2/htdocs/
+COPY *.html /usr/local/apache2/htdocs/
+COPY *.js /usr/local/apache2/htdocs/
+COPY *.css /usr/local/apache2/htdocs/
+
+
+# Enable CGI and copy Apache configurations
+COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+
+# Copy C++ CGI script and compile it
+COPY ./addBooking.cpp /usr/local/apache2/cgi-bin/
+RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/addBooking.cpp -o /usr/local/apache2/cgi-bin/addBooking -lcgicc -ljsoncpp
+
+# Make the CGI script executable
+RUN chmod +x /usr/local/apache2/cgi-bin/addBooking
 
 # Expose HTTP and HTTPS ports
 EXPOSE 80

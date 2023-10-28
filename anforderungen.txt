@@ -33,4 +33,4 @@ Manual 1
 58
 
 Buchungsatz
-    Belegnummer, Belegdatum, Text, SollKonto, HabenKonto, Betrag, TimeStamp, User 
+    Mandant, Belegnummer, Belegdatum, Text, SollKonto, HabenKonto, Betrag, TimeStamp, User 
