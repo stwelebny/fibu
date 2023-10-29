@@ -40,7 +40,11 @@ function loadContent(url, containerId, callback = null) {
         .then(content => {
             document.getElementById(containerId).innerHTML = content;
             if (callback) {
-                callback();
+               if (typeof callback === 'function') {
+                    callback();
+                } else {
+                    console.error(`Callback function not found or not a function.`);
+                }
             }
         })
         .catch(error => {
@@ -48,13 +52,70 @@ function loadContent(url, containerId, callback = null) {
         });
 }
 
+function setupMenuNavigation() {
+    const links = document.querySelectorAll('.dynamic-link');
+    links.forEach(link => {
+        link.addEventListener('click', function(event) {
+            console.log('Link clicked'); // Add this line
+            event.preventDefault(); // Prevent the default navigation
+            const contentUrl = this.getAttribute('href');
+            const callBackName = this.getAttribute('callBack'); // Fixed the typo here
+            if (callBackName && callBackName !="")
+                callBack = eval(callBackName)
+            else
+                callBack = null;
+            if (contentUrl && contentUrl !== '#') {
+                loadContent(contentUrl, 'contentContainer', callBack);
+            }
+        });
+    });
+}
+
+
 // Load the menu and default content on page load
 window.onload = () => {
-    loadContent('menu.html', 'menuContainer');
-
+    loadContent('menu.html', 'menuContainer', setupMenuNavigation);
     // Load default content or based on user navigation
     loadContent('bookingform.html', 'contentContainer', setupFormSubmission);
 };
 
-// Later, you can expand this to handle menu clicks and load different content
+function fetchAccountData() {
+    const accountNumber = document.getElementById('accountNumber').value;
+    if (!accountNumber) {
+        alert('Please enter an account number.');
+        return;
+    }
+
+    // Make an AJAX call to the CGI script
+    fetch(`/path/to/cgi/script?accountnumber=${accountNumber}`)
+        .then(response => response.json())
+        .then(data => {
+            displayData(data);
+        })
+        .catch(error => {
+            console.error('Error fetching account data:', error);
+        });
+}
+
+function displayData(data) {
+    const tableBody = document.getElementById('accountDetails');
+    tableBody.innerHTML = ''; // Clear any previous data
+
+    data.forEach(entry => {
+        const tableRow = document.createElement('tr');
+
+        tableRow.innerHTML = `
+            <td>${entry.Belegdatum}</td>
+            <td>${entry.Belegnummer}</td>
+            <td>${entry.Soll || 'N/A'}</td>
+            <td>${entry.Haben || 'N/A'}</td>
+            <td>${entry.Mandant}</td>
+            <td>${entry.Text}</td>
+            <td>${entry.TimeStamp}</td>
+            <td>${entry.User}</td>
+        `;
+
+        tableBody.appendChild(tableRow);
+    });
+}
 

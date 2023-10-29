@@ -59,3 +59,27 @@ form label, form input {
     margin-bottom: 10px;
 }
 
+.entry {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 8px 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
