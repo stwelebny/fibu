@@ -24,6 +24,29 @@ void writeToLog(const std::string &message) {
     }
 }
 
+int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
+    std::fstream file(filename, std::ios::in | std::ios::out);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file!" << std::endl;
+        return  0;
+    }
+
+    // If the file is empty, initialize it as an array
+    file.seekg(0, std::ios::end);
+    if (file.tellg() == 0) {
+        file << "[\n]";
+    }
+
+    // Seek to the end minus 2 positions
+    file.seekp(-2, std::ios::end);
+
+    // Append the new JSON data
+    file << "," << new_json_data << "\n]";
+
+    file.close();
+    return 1;
+}
+
 int main() {
     writeToLog("addBooking");
     std::cout << "Access-Control-Allow-Origin: *" << std::endl;  // Allows any origin to access
@@ -65,9 +88,7 @@ int main() {
 
         // Append the data to bookings.json
         std::ofstream file("/fibudata/bookings.json", std::ios_base::app);
-        if (file.is_open()) {
-            file << receivedData.toStyledString() << std::endl;
-            file.close();
+        if(appendToJsonArrayFile("/fibudata/bookings.json", receivedData.toStyledString())){
             std::string responseBody = "{\"status\": \"success\", \"message\": \"Booking added successfully!\"}";
             std::cout << "Content-Length: " << responseBody.size() << "\r\n";
             std::cout << "Content-type: application/json; charset=utf-8\r\n";

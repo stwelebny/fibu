@@ -1,19 +1,19 @@
 <div>
-    <label for="accountNumber">Account Number:</label>
+    <h2>Kontoblatt</h2>   
+    <label for="accountNumber">Konto Number:</label>
     <input type="text" id="accountNumber">
     <button onclick="fetchAccountData()">Konto anzeigen</button>
 </div>
+</BR>
 <table id="accountTable">
     <thead>
         <tr>
-            <th>Date</th>
-            <th>Document Number</th>
+            <th>Datum</th>
+            <th>Beleg Nummer</th>
+            <th>Gegenkonto</th>
             <th>Soll</th>
             <th>Haben</th>
-            <th>Client</th>
             <th>Text</th>
-            <th>Timestamp</th>
-            <th>User</th>
         </tr>
     </thead>
     <tbody id="accountDetails"></tbody>

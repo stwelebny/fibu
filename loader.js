@@ -4,6 +4,11 @@ function setupFormSubmission() {
     document.getElementById("bookingForm").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent default form submission
 
+         client = document.getElementById("mandant").value;
+         if (!client) {
+             alert('Bitte einen Mandanten angeben!');
+             return;
+        }
         // Extract values from form
         let formData = {
             "Mandant": document.getElementById("mandant").value,
@@ -52,6 +57,23 @@ function loadContent(url, containerId, callback = null) {
         });
 }
 
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+
 function setupMenuNavigation() {
     const links = document.querySelectorAll('.dynamic-link');
     links.forEach(link => {
@@ -69,6 +91,18 @@ function setupMenuNavigation() {
             }
         });
     });
+    const mandantInput = document.getElementById('mandant');
+
+    mandantInput.addEventListener('change', function() {
+        setCookie('mandant', this.value, 365); // Here, the cookie will expire after 365 days. Adjust as needed.
+    });
+
+    const mandantValue = getCookie('mandant');
+    if (mandantValue) {
+        mandantInput.value = mandantValue;
+    }
+
+
 }
 
 
@@ -81,19 +115,25 @@ window.onload = () => {
 
 function fetchAccountData() {
     const accountNumber = document.getElementById('accountNumber').value;
+    const client = getCookie('mandant');
     if (!accountNumber) {
-        alert('Please enter an account number.');
+        alert('Bitte eine Kontonummer angeben!');
+        return;
+    }
+
+    if (!client) {
+        alert('Bitte einen Mandanten angeben!');
         return;
     }
 
     // Make an AJAX call to the CGI script
-    fetch(`/path/to/cgi/script?accountnumber=${accountNumber}`)
+    fetch(`./cgi-bin/account?client=${client}&accountnumber=${accountNumber}`)
         .then(response => response.json())
         .then(data => {
             displayData(data);
         })
         .catch(error => {
-            console.error('Error fetching account data:', error);
+            console.error('Fehler bei der Kontoabfrage', error);
         });
 }
 
@@ -107,12 +147,10 @@ function displayData(data) {
         tableRow.innerHTML = `
             <td>${entry.Belegdatum}</td>
             <td>${entry.Belegnummer}</td>
+            <td>${entry.Gegenkonto}</td>
             <td>${entry.Soll || 'N/A'}</td>
             <td>${entry.Haben || 'N/A'}</td>
-            <td>${entry.Mandant}</td>
             <td>${entry.Text}</td>
-            <td>${entry.TimeStamp}</td>
-            <td>${entry.User}</td>
         `;
 
         tableBody.appendChild(tableRow);
