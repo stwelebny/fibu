@@ -56,44 +56,69 @@ void writeToLog(const std::string &message) {
  //     "TimeStamp" : "2023-10-28 12:33:18",
  //     "User" : "exampleUser"
 
+struct AccountBalance {
+    double sollSaldo = 0;
+    double habenSaldo = 0;
+};
 
-std::vector<Json::Value> filterEntriesByAccount(const Json::Value& data, const std::string& client, const std::string& accountNumber) {
-    std::vector<Json::Value> result;
+std::map<std::string, AccountBalance> computeBalanceForAccounts(const Json::Value& data, const std::string& client) {
+    std::map<std::string, AccountBalance> balances;
 
     if (!data.isArray()) {
         std::cerr << "Expected a JSON array, but received a different type." << std::endl;
         writeToLog("Expected a JSON array, but received a different type.");
 
+        std::map<std::string, AccountBalance> result;
         return result; // Return an empty result
     }
+
     for (const auto& entry : data) {
-        if (entry["Mandant"].asString() == client) {
-            Json::Value newEntry;
-            newEntry["Belegdatum"] = entry["Belegdatum"];
-            newEntry["Belegnummer"] = entry["Belegnummer"];
-            newEntry["Mandant"] = entry["Mandant"];
-            newEntry["Text"] = entry["Text"];
-            newEntry["TimeStamp"] = entry["TimeStamp"];
-            newEntry["User"] = entry["User"];
+        if (entry["Mandant"].asString() != client) {
+            continue;  // Skip entries that don't match the specified client
+        }
 
-            if (entry["SollKonto"].asString() == accountNumber) {
-                newEntry["Soll"] = entry["Betrag"];
-                newEntry["Haben"] = "";
-                newEntry["Gegenkonto"] = entry["HabenKonto"];
-            } else if (entry["HabenKonto"].asString() == accountNumber) {
-                newEntry["Haben"] = entry["Betrag"];
-                newEntry["Soll"] = "";
-                newEntry["Gegenkonto"] = entry["SollKonto"];
-            }
+        std::string accountNumberSoll = entry["SollKonto"].asString();
+        std::string accountNumberHaben = entry["HabenKonto"].asString();
+        double betrag = std::stod(entry["Betrag"].asString());
 
-            if (!newEntry["Soll"].empty() || !newEntry["Haben"].empty()) {
-                result.push_back(newEntry);
-            }
+        if (!accountNumberSoll.empty()) {
+            balances[accountNumberSoll].sollSaldo += betrag;
+        }
+        
+        if (!accountNumberHaben.empty()) {
+            balances[accountNumberHaben].habenSaldo += betrag;
         }
     }
 
-    return result;
+    // Compute the net difference for each account and assign to the appropriate column
+    for (auto& [account, balance] : balances) {
+        if (balance.sollSaldo > balance.habenSaldo) {
+            balance.sollSaldo -= balance.habenSaldo;
+            balance.habenSaldo = 0;
+        } else {
+            balance.habenSaldo -= balance.sollSaldo;
+            balance.sollSaldo = 0;
+        }
+    }
+
+    return balances; // This will return sorted by account number for the specified client
 }
+
+// Convert the balances map to a JSON array
+Json::Value balancesToJsonArray(const std::map<std::string, AccountBalance>& balances) {
+    Json::Value jsonArray(Json::arrayValue);
+
+    for (const auto& [account, balance] : balances) {
+        Json::Value jsonObject;
+        jsonObject["Konto"] = account;
+        jsonObject["Soll-Saldo"] = balance.sollSaldo;
+        jsonObject["Haben-Saldo"] = balance.habenSaldo;
+        jsonArray.append(jsonObject);
+    }
+
+    return jsonArray;
+}
+
 
 int main() {
     char* queryString = getenv("QUERY_STRING");
@@ -105,16 +130,14 @@ int main() {
 
     auto params = parseQueryString(queryString);
     auto clientIt = params.find("client");
-    auto accountNumberIt = params.find("accountnumber");
 
-    if (clientIt == params.end() || accountNumberIt == params.end()) {
+    if (clientIt == params.end()) {
         std::cout << "Content-Type: text/plain\r\n\r\n";
-        std::cout << "Error: Missing client or accountNumber parameters." << std::endl;
+        std::cout << "Error: Missing client parameter." << std::endl;
         return 1;
     }
 
     std::string client = clientIt->second;
-    std::string accountNumber = accountNumberIt->second;
 
     // Read the JSON data from file
     std::ifstream inputFile("/fibudata/bookings.json");
@@ -138,24 +161,16 @@ int main() {
 
     inputFile.close();
 
-    writeToLog("account: before filterEntriesByAccount");
-    auto filteredEntries = filterEntriesByAccount(data, client, accountNumber);
+    writeToLog("account: before computeBalancceForcForAccounts");
+    auto balances = computeBalanceForAccounts(data, client);
 
     std::cout << "Content-Type: application/json\r\n\r\n";
-    // Start the JSON array
-    std::cout << "[";
+    Json::Value jsonArray = balancesToJsonArray(balances);
+
+    // Serialize and output the JSON array
     Json::StreamWriterBuilder wbuilder;
-    wbuilder["indentation"] = "    "; // 4 spaces for indentation
-    // Output the filtered entries
-    writeToLog("account: before filteredEntries output loop");
-    for (size_t i = 0; i < filteredEntries.size(); ++i) {
-        std::cout << Json::writeString(wbuilder, filteredEntries[i]);
-        if (i < filteredEntries.size() - 1) {
-            std::cout << ",";
-        }
-    }
-    // End the JSON array
-    std::cout << "]";
+    wbuilder["indentation"] = "    "; // Optional: 4 spaces for indentation
+    std::cout << Json::writeString(wbuilder, jsonArray) << std::endl;
 
     return 0;
 }

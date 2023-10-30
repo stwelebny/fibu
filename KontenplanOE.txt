@@ -1,0 +1,550 @@
+Kontenplan Klasse 0
+Immaterielle Vermögensgegenstände
+0110	 Patentrechte, Lizenzen
+0120	Datenverarbeitungsprogramme
+0121	Geringwertige Datenverarbeitungsprogramme
+0180	Geleistete Anzahlungen auf immaterielle Vermögensgegenstände aus
+Anlagevermögen
+Grundstücke, grundstücksgleiche Rechte
+und Bauten, einschließlich der Bauten
+auf fremdem Grund
+0200	Unbebaute Grundstücke
+0210	Bebaute Grundstücke (Grundwert)
+0300	Gebäude
+Technische Anlagen und Maschinen
+0400	Maschinen
+0450	Sonstige Betriebsanlagen
+0480	Geringwertige Maschinen
+0500	Werkzeuge
+0550	Geringwertige Werkzeuge
+Andere Anlagen, Betriebs- und
+Geschäftsausstattung
+0600	Betriebs- und Geschäftsausstattung
+0620	Büromaschinen, EDV-Anlagen
+0630	Pkw und Kombis
+0640	Lkw
+0670	Geringwertige Betriebs- und
+Geschäftsausstattung
+0672	Geringwertige Büromaschinen, EDVAnlagen
+Geleistete Anzahlungen und Anlagen
+in Bau
+0700	Geleistete Anzahlungen auf Sachanlagen 20 %
+0710	 Anlagen in Bau
+Finanzanlagen
+0800	Beteiligungen
+0930	Festverzinsliche Wertpapiere des
+Anlagevermögens
+Klasse 1
+Bezugsverrechnung
+1000	Bezugsverrechnung
+Rohstoffe
+1100	Rohstoffvorrat
+1200	Vorrat bezogene Teile
+1250	Vorrat Ersatzteile
+Hilfsstoffe, Betriebsstoffe
+1300	Hilfsstoffvorrat
+1340	Vorrat Verpackungsmaterial
+1350	Vorrat Betriebsstoffe
+1360	Vorrat Heizöl
+1364	Vorrat feste Brennstoffe
+1365	Vorrat Schmiermittel
+1370	Vorrat Reinigungsmaterial
+1390	Vorrat Büromaterial
+Unfertige Erzeugnisse
+1400	Unfertige Erzeugnisse
+Fertige Erzeugnisse
+1500	Fertige Erzeugnisse
+Waren
+1600	Handelswarenvorrat
+1680	Emballagen-Vorrat
+Geleistete Anzahlungen
+1800	Geleistete Anzahlungen auf Vorräte
+20 %
+1801	Geleistete Anzahlungen auf Vorräte
+10 %
+1802	Geleistete Anzahlungen auf Vorräte
+13 %
+Klasse 2
+Forderungen aus Lieferungen und
+Leistungen
+2000	Lieferforderungen (Forderungen aus
+Lieferungen und Leistungen Inland,
+Kundensammelkonto)
+2070	Verrechnungskonto erhaltene
+Anzahlungen
+2080	Einzelwertberichtigungen zu
+Lieferforderungen Inland
+2100	Lieferforderungen Währungsunion
+2130	Einzelwertberichtigungen zu
+Lieferforderungen Währungsunion
+2150	Lieferforderungen sonstiges Ausland
+(Nicht-Währungsunion)
+2180	Einzelwertberichtigungen zu Lieferforderungen sonstiges Ausland
+(Nicht-Währungsunion)
+Sonstige Forderungen und Vermögensgegenstände
+2300	Sonstige Forderungen
+2320	Gegebene Darlehen
+2330	Forderungen aus Darlehenszinsen
+2340	Forderungen aus Beteiligungserträgen
+2350	Forderungen aus Wertpapierzinsen
+2360	Forderungen aus Leasinggeschäften
+2380	Guthaben bei Lieferanten (nicht aus
+Anzahlungen)
+2400	Lohn- und Gehaltsvorschüsse
+Forderungen aus der Abgabenverrechnung
+2500	Vorsteuer
+2510	Vorsteuer aus ig. Erwerben
+2520	Einfuhrumsatzsteuer
+Wertpapiere und Anteile
+2620	Aktien des Umlaufvermögens
+2650	Festverzinsliche Wertpapiere des
+Umlaufvermögens
+Kassenbestand, Schecks, Guthaben bei
+Kreditinstituten
+2700	Kassa
+2800	Bank (Guthaben bei Kreditinstituten)
+2870	Barverkehr mit Banken
+2880	Forderungen Kreditkartenunternehmen
+2885	Forderungen Debitkarten
+2890	Schwebende Geldbewegungen
+2900	Aktive Rechnungsabgrenzungsposten (ARA)
+2905	Aktivposten Leasingfahrzeuge
+Klasse 3
+Rückstellungen
+3000	Rückstellungen für Abfertigungen
+3010	Rückstellungen für Pensionen
+3020	Rückstellungen für Körperschaftsteuer
+3025	Sonstige Steuerrückstellungen
+3040	Rückstellungen für Rechts- und
+Beratungsaufwand
+3045	Rückstellungen für Prozesskosten
+3050 Rückstellungen für nicht konsumierte Urlaube
+3060	Rückstellungen für Gewährleistungsund Schadenersatzverpflichtungen
+(Garantierückstellungen)
+3065	Rückstellungen für Produkthaftung
+3070	Rückstellungen für Vergütungen an
+Mitarbeiter
+3075	Rückstellungen für Jubiläumsgelder
+3080	Rückstellungen für bei Kunden
+lagernde Emballagen
+3090	Sonstige Rückstellungen
+Anleihen, Verbindlichkeiten gegenüber
+Kreditinstituten und Finanzinstituten
+3120	Bank (Bankschuld, Verbindlichkeiten
+gegenüber Kreditinstituten)
+3130	Barverkehr mit Banken
+3150	Darlehen (von einer Bank)
+3160	Verbindlichkeiten aus Darlehenszinsen (zu 3150)
+3180	Verbindlichkeiten Kreditkartenunternehmen
+3190	Verbindlichkeiten Debitkarten
+Erhaltene Anzahlungen auf Bestellungen
+3200	Erhaltene Anzahlungen 20 %
+3201	Erhaltene Anzahlungen 10 %
+3202	Erhaltene Anzahlungen 13 %
+3203	Erhaltene Anzahlungen 0 %
+Verbindlichkeiten aus Lieferungen und
+Leistungen, Verbindlichkeiten aus der
+Annahme gezogener und der Ausstellung
+eigener Wechsel
+3300	Lieferverbindlichkeiten (Verbindlichkeiten aus Lieferungen und Leistungen Inland, Lieferantensammelkonto)
+3350	Verrechnungskonto geleistete
+Anzahlungen
+3360	Lieferverbindlichkeiten Währungsunion
+3370	Lieferverbindlichkeiten sonstiges
+Ausland (Nicht-Währungsunion)
+Verbindlichkeiten aus Steuern
+3500	Umsatzsteuer
+3510	Erwerbsteuer (USt aus ig. Erwerben)
+3520	USt-Zahllast
+3540	Verbindlichkeiten Finanzamt
+(Verrechnungskonto Finanzamt)
+3570	Verbindlichkeiten Zollamt
+3580	Einbehaltene KESt
+Verbindlichkeiten im Rahmen der
+sozialen Sicherheit
+3600	Verbindlichkeiten Gesundheitskasse
+3610	Verbindlichkeiten Gemeinde (Stadt)
+Übrige sonstige Verbindlichkeiten
+3700	Darlehen (nicht von einer Bank)
+3710	Verbindlichkeiten aus Darlehenszinsen (zu 3700)
+3720	Dividendenverbindlichkeiten
+(Verbindlichkeiten gegen Gesellschafter einer GmbH)
+3730	Gewinnverrechnung Kommanditist
+4900	Eigenverbrauch 20 % “
+4901	Eigenverbrauch 10 % “
+4902	Eigenverbrauch 13 % “
+4903	Eigenverbrauch 0 % “
+Klasse 5
+Wareneinsatz
+5000	Handelswareneinsatz 20 % 5.a
+5001 Handelswareneinsatz 10 % “
+5002 Handelswareneinsatz 13 % “
+5080	Emballagen-Einsatz “
+Verbrauch von Rohstoffen
+5100	Rohstoffverbrauch (-einsatz) “
+Verbrauch von bezogenen Teilen
+5200	Verbrauch von bezogenen Teilen “
+Verbrauch von Hilfsstoffen
+5300	Hilfsstoffverbrauch “
+5340	Verpackungsmaterialverbrauch “
+Verbrauch von Betriebsstoffen
+5400	Betriebsstoffverbrauch “
+5410	Schmiermittelverbrauch “
+5420	Reparaturmaterialverbrauch “
+5450	Reinigungsmaterialverbrauch “
+Verbrauch von Werkzeugen und anderen
+Erzeugungshilfsmitteln
+5500	Verbrauch von Werkzeugen,
+Erzeugungshilfsmitteln “
+5510	Ersatzteileverbrauch “
+Betriebskosten
+5600	Bezugskosten “
+Skontoerträge auf Materialaufwand
+sowie auf bezogene Herstellungsleistungen
+5880	Lieferantenskonti auf Wareneinkauf
+(Materialaufwand) 20 %
+5881	Lieferantenskonti auf Wareneinkauf
+(Materialaufwand) 10 %
+5882	Lieferantenskonti auf Wareneinkauf
+(Materialaufwand) 13 %
+5884	Lieferantenskonti Anlagenkäufe
+5885	Lieferantenskonti aus ig. Erwerben
+5886	Lieferantenskonti Import
+5890	Umsatzbonus auf Wareneinkauf 20 % 5.a
+5891	Umsatzbonus auf Wareneinkauf 10 % “
+5892	Umsatzbonus auf Wareneinkauf 13 % “
+Klasse 6
+Löhne
+6000	Fertigungslöhne 6.a
+6001 Überstunden Arbeiter “
+6010	Hilfslöhne “
+6020	Sonderzahlungen Arbeiter “
+6050 Zuweisungen an die Urlaubsrückstellung Arbeiter “
+6100	Lehrlingseinkommen Arbeiter “
+6120	Sonderzahlungen Arbeiterlehrlinge “
+Gehälter
+6200	Gehälter “
+6201	Überstunden Angestellte “
+6220	Sonderzahlungen Angestellte “
+6250	Zuweisungen an die Urlaubsrückstellung Angestellte “
+3750	Verbindlichkeiten gegenüber ­Kunden
+(nicht aus Anzahlungen)
+3800	Sonstige Verbindlichkeiten
+3850	Verbindlichkeiten gegen Mitarbeiter
+aus der Bezugsverrechnung
+Rechnungsabgrenzungsposten
+3900	Passive Rechnungsabgrenzungsposten (PRA)
+Klasse 4
+Umsatzerlöse und Erlösschmälerungen
+4000	Handelswarenerlöse 20 %
+(Fertigerzeugniserlöse oder andere
+Erlöse oder Erträge aus der Hauptleistung des Unternehmens) 1.*
+4001	Handelswarenerlöse 10 % “
+4002	Handelswarenerlöse 13 % “
+4010	Erlöse aus ig. Lieferungen “
+4015	Exporterlöse “
+4100	Fertigerzeugniserlöse 20 % “
+4101	 Fertigerzeugniserlöse 10 % “
+4180	Emballagen-Erlöse “
+4400	Erlösberichtigungen 20 % “
+4401	Erlösberichtigungen 10 % “
+4402	Erlösberichtigungen 13 % “
+4403 Erlösberichtigungen 0 % “
+4405	Erlösberichtigungen ig. Lieferungen “
+4406	Erlösberichtigungen Export “
+4410	Kundenskonti 20 % “
+4411	Kundenskonti 10 % “
+4412	Kundenskonti 13 % “
+4415	Kundenskonti aus ig. Lieferungen “
+4416	Kundenskonti Export “
+4480	Emballagen-Erlösberichtigungen “
+Bestandsveränderungen und aktivierte
+Eigenleistungen
+4500	Bestandsveränderungen 2.
+4580	Aktivierte Eigenleistungen 3.
+Sonstige betriebliche Erträge
+4600	Erlöse aus dem Abgang von ­Anlagen
+20 %
+4601	Erlöse aus dem Abgang von ­Anlagen
+0 %
+4610	Versicherungsentschädigungen für
+Anlagenabgänge
+4630	Erträge aus dem Abgang von
+Anlagen 4.a
+4660	Erträge aus der Zuschreibung
+zum Anlagevermögen “
+4700	Erträge aus der Auflösung von
+Rückstellungen (ausgenommen
+Rückstellungen für gewinnabhängige Steuern) 4.b
+4810	Mieterträge (Pachterträge)** 4.c
+4820	Provisionserträge** “
+4840	Fremdwährungskursgewinne “
+4850	Erträge aus Konventionalstrafen “
+4860	Versicherungsentschädigungen
+(sonstige) “
+4870	Erträge aus der Auflösung von
+Wertberichtigungen zu
+Forderungen “
+4880	Übrige betriebliche Erträge 20 % “
+4881	Übrige betriebliche Erträge 10 % “
+4882 Übrige betriebliche Erträge 13 % “
+4883	Übrige betriebliche Erträge 0 % “
+4890	Mahnspesenvergütungen “
+6300	Lehrlingseinkommen ­Angestellte “
+6320	Sonderzahlungen
+Angestelltenlehrlinge “
+6390	Bezüge freie Dienstnehmer “
+Aufwendungen für Abfertigungen,
+Betriebliche Vorsorgekassen und
+Altersversorgung
+6400	Abfertigungsaufwand Arbeiter 6.b
+6420	Abfertigungsaufwand Angestellte “
+6430	Zuweisungen an die ­Abfertigungsrückstellung “
+6440	Aufwand für Betriebliche Vorsorgekassen Arbeiter “
+6441 Aufwand für Betriebliche Vorsorgekassen Angestellte “
+6460	Zuweisungen an die Pensionsrückstellung “
+Gesetzlicher Sozialaufwand Arbeiter
+und Angestellte
+6500	Gesetzlicher Sozialaufwand
+Arbeiter “
+6560	Gesetzlicher Sozialaufwand
+Angestellte “
+Lohn- und gehaltsabhängige Abgaben
+und Pflichtbeiträge
+6600	Dienstgeberbeitrag Arbeiter “
+6610	Zuschlag zum DB Arbeiter “
+6620	Kommunalsteuer Arbeiter “
+6630	Wiener Dienstgeberabgabe
+Arbeiter “
+6660	Dienstgeberbeitrag Angestellte “
+6670	Zuschlag zum DB Angestellte “
+6680	Kommunalsteuer Angestellte “
+6690	Wiener Dienstgeberabgabe
+Angestellte “
+Sonstige Sozialaufwendungen
+6700	Freiwilliger Sozialaufwand “
+Klasse 7
+Abschreibungen
+7010	Abschreibungen von Sachanlagen
+(Absetzung für ­Abnutzung, AfA) 7.a
+7040	Außerplanmäßige Abschreibungen von Anlagevermögen
+(Teilwertabschreibungen,
+ausgenommen Finanzanlagen) “
+7060	Abschreibungen geringwertiger
+Wirtschaftsgüter “
+7070	Außerplanmäßige Abschreibungen von Umlaufvermögen 7.b
+Sonstige Steuern
+7100	Grundsteuer 8.
+7150	Tourismusabgabe “
+7180	Gebühren “
+7190	Sonstige Abgaben “
+Instandhaltung und Betriebskosten
+7200	Instandhaltung durch Dritte “
+7210	Reinigung durch Dritte “
+7220	Entsorgungsaufwand “
+7240	Heizölverbrauch “
+7250	Treibstoffverbrauch “
+7260	Gasverbrauch “
+7270	Stromverbrauch “
+7280	Heizmaterialverbrauch
+(feste Brennstoffe) “
+*Bei den Ertrags- und Aufwandskonten ist angegeben, welcher Position (Nr. lt. § 231UGB) der staffelförmigen GuV-Rechnung nach dem
+Gesamtkostenverfahren sie zuzuordnen sind.
+**Wenn es sich um Nebenerträge handelt.
+Transport-, Reise- und Fahrtaufwand,
+Nachrichtenaufwand
+7300	Ausgangsfrachten 20 %
+(Transporte durch Dritte) “
+7301	Ausgangsfrachten 0 % “
+7310	Paketgebühren 20 % “
+7311 Paketgebühren 0 % “
+7320	Pkw- und Kombi-Betriebsaufwand “
+7321	Motorbezogene Versicherungssteuer Pkw und Kombis “
+7325	Versicherungsaufwand Pkw
+und Kombis “
+7326	Parkgebühren, Straßenmaut
+Pkw und ­Kombis “
+7330	Lkw-Betriebsaufwand “
+7331	Motorbezogene Versicherungssteuer Lkw “
+7332	Kraftfahrzeugsteuer Lkw “
+7335	Versicherungsaufwand Lkw “
+7336	Parkgebühren, Straßenmaut Lkw “
+7340	Bahn- und Autobuskosten
+Inlandsreisen “
+7341	Flugkosten Inlandsreisen “
+7342	Taxikosten Inlandsreisen “
+7343	Sonstige Fahrtkosten Inlandsreisen “
+7344	Reise-Nebenkosten Inland “
+7345	Kilometergelder Inland “
+7350	Bahn- und Autobuskosten
+Auslandsreisen “
+7351	Flugkosten Auslandsreisen “
+7352	Taxikosten Auslandsreisen “
+7354	Reise-Nebenkosten Ausland “
+7355	Kilometergelder Ausland “
+7360	Tagesgelder Inland “
+7361	Verpflegungsgelder Inlandsreisen
+20 % “
+7362	Verpflegungsgelder Inlandsreisen
+10 % “
+7364	Nächtigungsgelder Inland “
+7365	Tagesgelder Ausland “
+7366	Nächtigungsgelder Ausland “
+7380	Telefon- und Internetgebühren “
+7385	Portogebühren “
+Miet-, Pacht-, Leasing- und Lizenzaufwand
+7400	Mietaufwand (Pachtaufwand) “
+7440	Leasingaufwand “
+7450	Leasingaufwand Pkw und Kombis “
+7460	Leasingaufwand Lkw “
+7480 Lizenzaufwand “
+Aufwand für beigestelltes Personal,
+Provisionen an Dritte, Aufsichtsratsvergütungen, Geschäftsführerentgelte
+an Konzerngesellschaften/
+Komplementär-GmbH
+7540	Provisionen an Dritte (NichtArbeitnehmer; Vertriebsaufwand
+für Handelsvertreter) “
+Büro-, Werbe- und Repräsentationsaufwand
+7600	Büromaterial (Büroaufwand,
+Bürobedarf) “
+7610	 Kopien und sonstige Druckkosten “
+7630	Fachliteratur und Zeitungen “
+7650	Werbeaufwand “
+7660	Aufwand für Geschäftsanbahnung
+20 % “
+7661	Aufwand für Geschäftsanbahnung
+10 % “
+7662	Aufwand für Geschäftsanbahnung
+0 % “
+7663	Nicht absetzbarer Aufwand für
+Geschäftsanbahnung 20 % “
+7664	Nicht absetzbarer Aufwand für
+Geschäftsanbahnung 10 % “
+7665	Nicht absetzbarer Aufwand für
+Geschäftsanbahnung 0 % “
+7680	Spenden und Trinkgelder “
+Versicherungen, übrige Aufwendungen
+7700	Versicherungsaufwand “
+7710	Haftpflichtversicherungen
+(ohne Kraftfahrzeuge) “
+7740	Versicherungsbeiträge an die
+Sozialversicherungsanstalt der
+Selbständigen “
+7750	Rechts- und Beratungsaufwand “
+7770	Aufwand für Aus- und Fortbildung “
+7780	Kammerumlage “
+7790	Spesen des Geldverkehrs “
+7791	Sonstige Bankspesen “
+7792	Provisionen, Gebühren Kredit- und
+Debitkarten “
+7800	Abschreibungen von Vorräten 5.a
+7802	Abschreibungen von Forderungen
+20 % 8.
+7803	Abschreibungen von Forderungen
+10 % “
+7804	Abschreibungen von ­Forderungen
+13 % “
+7805	Abschreibungen von ­Forderungen
+0 % “
+7806	Zuweisungen an WB zu
+Forderungen “
+7810	Zuweisungen an die Garantierückstellung “
+7811	Konventionalstrafen “
+7815	Fremdwährungskursverluste “
+7818	Rundungsdifferenzen “
+7819	Sonstige Schadensfälle “
+7820	Buchwert abgegangener Anlagen
+7830	Verluste aus dem Abgang von
+Anlagen “
+7840	Aufwand für Vorperioden “
+7850	Übrige betriebliche Aufwendungen
+20 % “
+7851	Übrige betriebliche Aufwendungen
+10 % “
+7852	Übrige betriebliche Aufwendungen
+0 % “
+7880	Lieferantenskonti auf sonstige
+betriebliche Aufwendungen
+Klasse 8
+Finanzerträge und Finanzaufwendungen
+8010	Erträge aus Beteiligungen 10.
+8030	Steuerpflichtige Zinsenerträge
+für Wertpapiere des Anlagevermögens 11.
+8031	Endbesteuerte Zinsenerträge für Wertpapiere des Anlagevermögens “
+8035	Steuerpflichtige Dividendenerträge
+(aus Aktien ohne ­Beteiligungscharakter) “
+8036	Endbesteuerte Dividendenerträge
+(aus Aktien ohne Beteiligungscharakter) “
+8050	Zinsenerträge aus Bankguthaben 12.
+8051	Zinsenerträge aus gewährten
+Darlehen “
+8052	Steuerpflichtige Zinsenerträge
+für Wertpapiere des Umlaufvermögens “
+8053 Endbesteuerte Zinsenerträge
+für Wertpapiere des Umlaufvermögens “
+8055	Verzugszinsenerträge “
+8056	Sonstige Zinsenerträge 20 % “
+8057	Sonstige Zinsenerträge 10 % “
+8070	Erlöse aus dem Abgang von Beteiligungen 13.
+8080	Erlöse aus dem Abgang von
+sonstigen Finanzanlagen “
+8090	Erlöse aus dem Abgang von Wertpapieren des Umlaufvermögens “
+8110	Buchwert abgegangener
+Beteiligungen “
+8120	Buchwert abgegangener
+sonstiger Finanzanlagen “
+8130	Buchwert abgegangener Wertpapiere des Umlaufvermögens “
+8140	Erträge aus dem Abgang von Beteiligungen “
+8141	Erträge aus dem Abgang sonstiger
+Finanzanlagen “
+8142	Erträge aus dem Abgang von Wertpapieren des Umlaufvermögens “
+8170	Erträge aus der Zuschreibung zu	
+Finanzanlagen “
+8180	Erträge aus der Zuschreibung zu
+Wertpapieren desUmlaufvermögens “
+8200	Abschreibungen auf
+Beteiligungen 14.
+8250	Verluste aus dem Abgang von
+Beteiligungen “
+8260	Verluste aus dem Abgang von
+sonstigen Finanzanlagen “
+8261	Verluste aus dem Abgang von Wertpapieren des Umlaufvermögens “
+8270	Abschreibungen auf sonstige
+	 Finanzanlagen “
+8271	Abschreibungen auf Wertpapiere
+des Umlaufvermögens “
+8310	Zinsenaufwand für Bankkredite 15.
+8311	Sonstiger Aufwand für Bankkredite
+(z. B. Bereitstellungsprovision,
+Überziehungsprovision) “
+8315	Zinsenaufwand für Darlehen “
+8320	Verzugszinsenaufwand “
+8321	Mahnspesen “
+8325	Zinsenaufwand für Lieferantenkredite 20 % “
+8326	Zinsenaufwand für Lieferantenkredite 10 % “
+Steuern vom Einkommen und vom
+Ertrag
+8500	Körperschaftsteuer 
+8510	Körperschaftsteuer Vorjahre 
+8520	Erträge aus der Auflösung von Körperschaftsteuerrückstellungen “
+8750	Erträge aus der Auflösung von freien Rücklagen
+8900	Zuweisung an die gesetzliche Rücklage
+8910	Zuweisung an die freie Rücklage “
+9000	Kapital (Stammkapital, Grundkapital,
+9050	Variables Kapital … (Vollhafter)
+9090	Ausstehende Einlage … (Vollhafter)
+9100	Einlage Kommanditist
+9150	Ausstehende Einlage Kommanditist
+9160	Verlustanteil Kommanditist
+9190	Ausstehende Einlagen (nicht eingeforderte, bei Kapitalgesellschaften)
+9200	Kapitalrücklagen
+9300	Gesetzliche Gewinnrücklagen
+9310	Freie Rücklage
+9390	Bilanzgewinn (Bilanzverlust)
+9600	Privat
+9610	Privatsteuern
+9800	Eröffnungsbilanzkonto (EBK)
+9850	Schlussbilanzkonto (SBK)
+9880	Gewinnvortrag (Verlustvortrag)
+9890	Gewinn- und Verlustkonto (GuV)
+9900	Zwischenkonto (füR r EDV-Sammelbuchungen)

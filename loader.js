@@ -137,6 +137,15 @@ function fetchAccountData() {
         });
 }
 
+
+function formatCurrencyValue(value) {
+    return new Intl.NumberFormat('de-AT', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(value);
+}
+
+
 function displayData(data) {
     const tableBody = document.getElementById('accountDetails');
     tableBody.innerHTML = ''; // Clear any previous data
@@ -148,8 +157,8 @@ function displayData(data) {
             <td>${entry.Belegdatum}</td>
             <td>${entry.Belegnummer}</td>
             <td>${entry.Gegenkonto}</td>
-            <td>${entry.Soll || 'N/A'}</td>
-            <td>${entry.Haben || 'N/A'}</td>
+            <td style="text-align: right;">${formatCurrencyValue(entry["Soll"])}</td>
+            <td style="text-align: right;">${formatCurrencyValue(entry["Haben"])}</td>
             <td>${entry.Text}</td>
         `;
 
@@ -157,3 +166,40 @@ function displayData(data) {
     });
 }
 
+
+function fetchBalanceList() {
+
+    const client = getCookie('mandant');
+    if (!client) {
+        alert('Bitte einen Mandanten angeben!');
+        return;
+    }
+
+    // Make an AJAX call to the CGI script
+    fetch(`./cgi-bin/balanceList?client=${client}`)
+        .then(response => response.json())
+        .then(data => {
+            displayBalanceList(data);
+        })
+        .catch(error => {
+            console.error('Fehler bei der Abfrage', error);
+        });
+}
+
+function displayBalanceList(data) {
+    const tableBody = document.getElementById('balanceListDetails');
+    tableBody.innerHTML = ''; // Clear any previous data
+
+    data.forEach(entry => {
+        const tableRow = document.createElement('tr');
+
+        tableRow.innerHTML = `
+            <td>${entry.Konto}</td>
+            <td></td>
+            <td style="text-align: right;">${formatCurrencyValue(entry["Soll-Saldo"])}</td>
+            <td style="text-align: right;">${formatCurrencyValue(entry["Haben-Saldo"])}</td>
+        `;
+
+        tableBody.appendChild(tableRow);
+    });
+}
