@@ -1,0 +1,49 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+h2 {
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.print-container {
+    width: 210mm; 
+    margin: 20mm auto; /* Adjust the margin values if needed */
+}
+
+/* Print-specific styles */
+@media print {
+    button {
+        display: none; /* Hide the print button */
+    }
+
+    .print-container {
+        margin: 0;
+        width: 100%;
+    }
+
+    /* Optional: Add a page break after the main content to ensure footer starts on a new page */
+    main::after {
+        content: "";
+        display: table;
+        clear: both;
+        page-break-after: always;
+    }
+}
