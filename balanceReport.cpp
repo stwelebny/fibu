@@ -127,7 +127,7 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
             Json::Value kontenklasse(Json::objectValue);
             kontenklasse["name"] = item.name;
             kontenklasse["subClasses"] = Json::Value(Json::arrayValue);
-
+            current2Digits = nullptr;
             root.append(kontenklasse);
             currentKontenklasse = &root[root.size() - 1];
         } else if (item.type == "2Digits") {
@@ -145,13 +145,20 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
             threeDigits["entries"] = Json::Value(Json::arrayValue);
 
             std::string upperLimit = "999";  // default to the highest possible value
-            if (idx + 1 < structure.size() && structure[idx+1].type == "3Digits") {
-                upperLimit = extractFirst3Digits(structure[idx+1].name);
+            int lookForAccounts=0;
+            if (idx + 1 < structure.size()) {
+                if (structure[idx+1].type == "3Digits") {
+                    upperLimit = extractFirst3Digits(structure[idx+1].name);
+                    lookForAccounts=1;
+                }
+            } else {
+                lookForAccounts = 1;
             }
+
 
             std::string currentStart = extractFirst3Digits(item.name);
 
-            while (accountIt != accountsWithBalances.end() && currentStart <= accountIt->first && accountIt->first < upperLimit) {
+            while (lookForAccounts && accountIt != accountsWithBalances.end() && currentStart <= accountIt->first && accountIt->first < upperLimit) {
                 Json::Value account(Json::objectValue);
                 writeToLog("balanceReport, iterateThroughAccounts"+accountIt->first);
                 account["account"] = accountIt->first;
@@ -163,7 +170,11 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
             }
 
             //current2Digits->["subClasses"].append(threeDigits);
-            (*current2Digits)["subClasses"].append(threeDigits);
+            if (current2Digits) {
+                (*current2Digits)["subClasses"].append(threeDigits);
+            } else {
+                (*currentKontenklasse)["subClasses"].append(threeDigits);
+            }
         }
         writeToLog("balanceReport, iterateThroughAccounts"+idx);
     }
@@ -233,9 +244,14 @@ int main() {
             item.type = "Kontenklasse";
         } else if (isdigit(line[0]) && isdigit(line[1]) && !isdigit(line[2])) {
             item.type = "2Digits";
-        } else if (isdigit(line[0]) && isdigit(line[1]) && isdigit(line[2])) {
+        } else if (isdigit(line[0]) && isdigit(line[1]) && isdigit(line[2])) { 
             item.type = "3Digits";
+        } else {
+            std::cout << "{\"status\": \"error\", \"message\": \"Invalid Line in EinheitskontenrahmenOE.txt\"}" << std::endl;
+            writeToLog("Invalid Line in EinheitskontenrahmenOE.txt: " + line);
+            return 1;
         }
+
 
         structure.push_back(item);
     }

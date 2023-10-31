@@ -102,11 +102,7 @@ Kontenklasse 2: Sonstiges Umlaufvermögen, aktive Rechnungsabgrenzungsposten, ak
 227 Einzelwertberichtigungen zu Forderungen gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht
 228 Pauschalwertberichtigungen zu Forderungen gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht
 23 – 24 Sonstige Forderungen und Vermögensgegenstände
-230 – 245 Sonstige Forderungen und Vermögensgegenstände (z.B. Darlehensforderungen, soweit nicht Anlagevermögen, z.B. gegenüber Gesellschaftern oder Mitarbeiter(inne)n,
-Verrechnungskonto Gesellschafter, Forderungen gegenüber Mitgliedern (Verein), Forderungen gegenüber
-Organmitgliedern, sonstige Forderungen gegenüber Mitarbeiter(inne)n, Kostenvorschüsse, Kautionen,
-Depotzahlungen, Ansprüche aus Rückdeckungsversicherungen, soweit nicht Anlagevermögen,
-Ansprüche gegenüber Versicherungsunternehmen aus Schadenersätzen usw.)
+230 – 245 Sonstige Forderungen und Vermögensgegenstände (z.B. Darlehensforderungen, soweit nicht Anlagevermögen, z.B. gegenüber Gesellschaftern oder Mitarbeiter(inne)n, Verrechnungskonto Gesellschafter, Forderungen gegenüber Mitgliedern (Verein), Forderungen gegenüber Organmitgliedern, sonstige Forderungen gegenüber Mitarbeiter(inne)n, Kostenvorschüsse, Kautionen, Depotzahlungen, Ansprüche aus Rückdeckungsversicherungen, soweit nicht Anlagevermögen, Ansprüche gegenüber Versicherungsunternehmen aus Schadenersätzen usw.)
 246 Eingeforderte, aber noch nicht eingezahlte Einlagen
 247 Einzelwertberichtigungen zu sonstigen Forderungen und Vermögensgegenständen
 248 Pauschalwertberichtigungen zu sonstigen Forderungen und Vermögensgegenständen
@@ -155,15 +151,13 @@ Kontenklasse 3: Rückstellungen, Verbindlichkeiten, passive Rechnungsabgrenzungs
 337 Verbindlichkeiten aus Lieferungen und Leistungen sonstiges Ausland (Fremdwährungen)
 338 Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel
 339 Verrechnungskonto Telebanking
-34 Verbindlichkeiten gegenüber verbundenen Unternehmen, gegenüber Unternehmen,
-mit denen ein Beteiligungsverhältnis besteht, und gegenüber Gesellschaftern
+34 Verbindlichkeiten gegenüber verbundenen Unternehmen, gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht, und gegenüber Gesellschaftern
 340 – 342 Verbindlichkeiten aus Lieferungen und Leistungen gegenüber verbundenen Unternehmen, Verbindlichkeiten aus Lieferungen und Leistungen gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht
 343 – 345 sonstige Verbindlichkeiten gegenüber verbundenen Unternehmen, sonstige Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht
 346 Verbindlichkeiten gegenüber Gesellschaftern
 347 Einlagen stiller Gesellschafter
 35 – 38 Sonstige Verbindlichkeiten
-350 – 359 Verbindlichkeiten aus Steuern (Umsatzsteuer, noch nicht geschuldete Umsatzsteuer, Umsatzsteuer aus innergemeinschaftlichen Erwerben, Umsatzsteuer-Zahllast, Verbindlichkeiten gegenüber Finanzamt, einbehaltene Kapitalertragsteuer,
-Verbindlichkeiten gegenüber Gemeinde/Stadtkasse usw.)
+350 – 359 Verbindlichkeiten aus Steuern (Umsatzsteuer, noch nicht geschuldete Umsatzsteuer, Umsatzsteuer aus innergemeinschaftlichen Erwerben, Umsatzsteuer-Zahllast, Verbindlichkeiten gegenüber Finanzamt, einbehaltene Kapitalertragsteuer, Verbindlichkeiten gegenüber Gemeinde/Stadtkasse usw.)
 360 – 369 Verbindlichkeiten im Rahmen der sozialen Sicherheit (z.B. Verbindlichkeiten gegenüber Krankenkasse)
 370 – 389 Übrige sonstige Verbindlichkeiten
 39 Passive Rechnungsabgrenzungsposten
@@ -308,8 +302,7 @@ Kontenklasse 8: Finanzerträge und Finanzaufwendungen, Steuern vom Einkommen und
 870 – 889 Zuweisung zu Gewinnrücklagen
 890 Gewinnabfuhr bzw. Verlustüberrechnung aus Ergebnisabführungsverträgen (eigene Ergebnisse)
 Kontenklasse 9: Eigenkapital, Einlagen unechter stiller Gesellschafter, Abschluss- und Evidenzkonten
-900 – 918 Gezeichnetes bzw. gewidmetes Kapital (Stammkapital, Grundkapital, ...)
-Vereinbarte/Bedungene Einlagen (bei Personengesellschaften)
+900 – 918 Gezeichnetes bzw. gewidmetes Kapital (Stammkapital, Grundkapital, ...) Vereinbarte/Bedungene Einlagen (bei Personengesellschaften)
 919 Nicht eingeforderte ausstehende Einlagen; genehmigte und berechtigte Entnahmen von Gesellschaftern (bei Personengesellschaften)
 920 Eigene Anteile
 930 – 939 Kapitalrücklagen
