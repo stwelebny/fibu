@@ -100,10 +100,10 @@ struct StructureItem {
     std::string type;
 };
 
-std::string extractFirst3Digits(const std::string& s) {
+std::string extractFirstNDigits(const std::string& s, int n) {
     for (int i = 0; i < s.size(); i++) {
         if (isdigit(s[i])) {
-            return s.substr(i, 3);
+            return s.substr(i, n);
         }
     }
     return "";
@@ -111,6 +111,7 @@ std::string extractFirst3Digits(const std::string& s) {
 
 Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, const std::map<std::string, AccountBalance>& accountsWithBalances) {
     auto accountIt = accountsWithBalances.begin();
+    Json::Value balance;
 
     Json::Value root(Json::arrayValue);
 
@@ -119,11 +120,23 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
 
     writeToLog("balanceReport, iterateThroughAccounts, entered");
     writeToLog("Size of structure vector: " + std::to_string(structure.size()));
+
+    double kontenklasseSollSum = 0.0;
+    double kontenklasseHabenSum = 0.0;
+    double twoDigitsSollSum = 0.0;
+    double twoDigitsHabenSum = 0.0;
+    double totalSollSum = 0.0;
+    double totalHabenSum = 0.0;
+
     for (int idx = 0; idx < structure.size(); idx++) {
         const StructureItem& item = structure[idx];
+        double sollSum = 0.0;
+        double habenSum = 0.0;
 
         if (item.type == "Kontenklasse") {
             writeToLog("Handling a Kontenklasse");
+            kontenklasseSollSum = 0.0;
+            kontenklasseHabenSum = 0.0;
             Json::Value kontenklasse(Json::objectValue);
             kontenklasse["name"] = item.name;
             kontenklasse["subClasses"] = Json::Value(Json::arrayValue);
@@ -132,6 +145,8 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
             currentKontenklasse = &root[root.size() - 1];
         } else if (item.type == "2Digits") {
             writeToLog("Handling a 2Digits");
+            twoDigitsSollSum = 0.0;
+            twoDigitsHabenSum = 0.0;
             Json::Value twoDigits(Json::objectValue);
             twoDigits["name"] = item.name;
             twoDigits["subClasses"] = Json::Value(Json::arrayValue);
@@ -143,46 +158,58 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
             Json::Value threeDigits(Json::objectValue);
             threeDigits["name"] = item.name;
             threeDigits["entries"] = Json::Value(Json::arrayValue);
-
             std::string upperLimit = "999";  // default to the highest possible value
-            int lookForAccounts=0;
-            if (idx + 1 < structure.size()) {
-                if (structure[idx+1].type == "3Digits") {
-                    upperLimit = extractFirst3Digits(structure[idx+1].name);
-                    lookForAccounts=1;
-                }
-            } else {
-                lookForAccounts = 1;
+            if (idx +1 < structure.size() && structure[idx+1].type == "3Digits") {
+               upperLimit = extractFirstNDigits(structure[idx+1].name, 3);
+            } else if (idx +1 < structure.size() && structure[idx+1].type == "2Digits") {
+               upperLimit = extractFirstNDigits(structure[idx+1].name, 2);
+            } else if (idx +1 < structure.size() && structure[idx+1].type == "Kontenklasse") {
+               upperLimit = extractFirstNDigits(structure[idx+1].name, 1);
             }
-
-
-            std::string currentStart = extractFirst3Digits(item.name);
-
-            while (lookForAccounts && accountIt != accountsWithBalances.end() && currentStart <= accountIt->first && accountIt->first < upperLimit) {
+            std::string currentStart = extractFirstNDigits(item.name, 3);
+            while (accountIt != accountsWithBalances.end() && currentStart <= accountIt->first && accountIt->first < upperLimit) {
                 Json::Value account(Json::objectValue);
                 writeToLog("balanceReport, iterateThroughAccounts"+accountIt->first);
                 account["account"] = accountIt->first;
                 account["sollSaldo"] = accountIt->second.sollSaldo;
                 account["habenSaldo"] = accountIt->second.habenSaldo;
-
+                sollSum += accountIt->second.sollSaldo;
+                habenSum += accountIt->second.habenSaldo;
+                totalSollSum += accountIt->second.sollSaldo;
+                totalHabenSum += accountIt->second.habenSaldo;
                 threeDigits["entries"].append(account);
                 accountIt++;
             }
-
-            //current2Digits->["subClasses"].append(threeDigits);
-            if (current2Digits) {
-                (*current2Digits)["subClasses"].append(threeDigits);
-            } else {
-                (*currentKontenklasse)["subClasses"].append(threeDigits);
+            if (!threeDigits["entries"].empty()) {
+                threeDigits["sollSum"] = sollSum;
+                threeDigits["habenSum"] = habenSum;
+                if (current2Digits) {
+                    twoDigitsSollSum += sollSum;
+                    twoDigitsHabenSum += habenSum;
+                    (*current2Digits)["subClasses"].append(threeDigits);
+                } else {
+                    (*currentKontenklasse)["subClasses"].append(threeDigits);
+                }
             }
+            kontenklasseSollSum += sollSum;
+            kontenklasseHabenSum += habenSum;
+        }
+        if (current2Digits) {
+            (*current2Digits)["sollSum"] = twoDigitsSollSum;
+            (*current2Digits)["habenSum"] = twoDigitsHabenSum;
+        }
+        if (idx + 1 == structure.size() || structure[idx + 1].type == "Kontenklasse") {
+            (*currentKontenklasse)["sollSum"] = kontenklasseSollSum;
+            (*currentKontenklasse)["habenSum"] = kontenklasseHabenSum;
         }
         writeToLog("balanceReport, iterateThroughAccounts"+idx);
     }
-
-
+    balance["sollSaldo"] = totalSollSum;
+    balance["habenSaldo"] = totalHabenSum;
+    balance["KontenKlassen"] = root;
     writeToLog("balanceReport, iterateThroughAccounts, before return");
 
-    return root;
+    return balance;
 }
 
 

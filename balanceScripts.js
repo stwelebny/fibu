@@ -72,7 +72,36 @@ function renderBalanceSheetSection(section, container) {
 
 function renderBalanceSheet(data) {
     const mainElement = document.querySelector('main');
-    data.forEach(section => {
+    data.KontenKlassen.forEach(section => {
         renderBalanceSheetSection(section, mainElement);
     });
+    const hr = document.createElement('h2');
+    mainElement.appendChild(hr);
+
+    const table = document.createElement('table');
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    ['Bilanzsumme', 'Soll-Saldo', 'Haben-Saldo'].forEach(header => {
+         const th = document.createElement('th');
+         th.textContent = header;
+         headerRow.appendChild(th);
+     });
+     thead.appendChild(headerRow);
+     table.appendChild(thead);
+     const tbody = document.createElement('tbody');
+     const row = document.createElement('tr');
+     const td = document.createElement('td');
+     td.textContent = "";
+     row.appendChild(td);
+     const td2 = document.createElement('td');
+     td2.textContent = data.sollSaldo;
+     row.appendChild(td2);
+     const td3 = document.createElement('td');
+     td3.textContent = data.habenSaldo;
+     row.appendChild(td3);
+     tbody.appendChild(row);
+     table.appendChild(tbody);
+     mainElement.appendChild(table);
+
 }
