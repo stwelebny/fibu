@@ -117,7 +117,7 @@ int main() {
     std::string accountNumber = accountNumberIt->second;
 
     // Read the JSON data from file
-    std::ifstream inputFile("/fibudata/bookings.json");
+    std::ifstream inputFile("/fibudata/"+client+"-bookings.json");
     if (!inputFile.is_open()) {
         std::cout << "{\"status\": \"error\", \"message\": \"Failed to open the bookings file!\"}" << std::endl;
         writeToLog("Failed to open the bookings file!");

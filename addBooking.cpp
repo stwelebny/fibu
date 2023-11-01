@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <sstream>
 #include <iterator>
+#include <cstdlib>
 
 
 std::string getCurrentTimeStamp() {
@@ -24,6 +25,35 @@ void writeToLog(const std::string &message) {
     }
 }
 
+#include <iostream>
+#include <fstream>
+
+int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
+    std::fstream file(filename, std::ios::in | std::ios::out | std::ios::ate);
+    
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file!" << std::endl;
+        return 0;
+    }
+
+    // Check if the file is empty
+    if (file.tellg() == 0) {
+        // If the file is empty, initialize it with the new JSON data enclosed in square brackets
+        file << "[\n" << new_json_data << "\n]";
+    } else {
+        // If the file is not empty, move two characters backward (to overwrite the closing bracket)
+        file.seekp(-2, std::ios::end);
+        
+        // Append a comma, the new JSON data, and then the closing bracket
+        file << ",\n" << new_json_data << "\n]";
+    }
+
+    file.close();
+    return 1;
+}
+
+
+/*
 int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
     std::fstream file(filename, std::ios::in | std::ios::out);
     if (!file.is_open()) {
@@ -39,6 +69,14 @@ int appendToJsonArrayFile(const std::string& filename, const std::string& new_js
 
     // Seek to the end minus 2 positions
     file.seekp(-2, std::ios::end);
+    char prevChar;
+    file.seekg(-2, std::ios::cur);
+
+    file.get(prevChar);
+    if (prevChar != '[') {
+        file << ",";
+    }
+    file << new_json_data << "\n]";
 
     // Append the new JSON data
     file << "," << new_json_data << "\n]";
@@ -46,6 +84,7 @@ int appendToJsonArrayFile(const std::string& filename, const std::string& new_js
     file.close();
     return 1;
 }
+*/
 
 int main() {
     writeToLog("addBooking");
@@ -84,11 +123,21 @@ int main() {
 
         // Add additional fields
         receivedData["TimeStamp"] = getCurrentTimeStamp();
-        receivedData["User"] = "exampleUser"; // Change this as per your requirements
+        const char* username = std::getenv("REMOTE_USER");
+        if (!username) {
+            username = std::getenv("HTTP_REMOTE_USER");
+        }   
+        if (username) {
+            writeToLog (username);
+            receivedData["User"] = username; // Change this as per your requirements
+        } else {
+            receivedData["User"] = "";
+        }
 
+        std::string client = receivedData["Mandant"].asString();
         // Append the data to bookings.json
-        std::ofstream file("/fibudata/bookings.json", std::ios_base::app);
-        if(appendToJsonArrayFile("/fibudata/bookings.json", receivedData.toStyledString())){
+        std::ofstream file("/fibudata/"+client+"-bookings.json", std::ios_base::app);
+        if(appendToJsonArrayFile("/fibudata/"+client+"-bookings.json", receivedData.toStyledString())){
             std::string responseBody = "{\"status\": \"success\", \"message\": \"Booking added successfully!\"}";
             std::cout << "Content-Length: " << responseBody.size() << "\r\n";
             std::cout << "Content-type: application/json; charset=utf-8\r\n";

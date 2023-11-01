@@ -6,15 +6,14 @@ function submitForm(form) {
          alert('Bitte einen Mandanten angeben!');
          return;
     }
-    // Extract values from form
     let formData = {
-        "Mandant": document.getElementById("mandant").value,
-        "Belegnummer": document.getElementById("belegnummer").value,
-        "Belegdatum": document.getElementById("belegdatum").value,
-        "Text": document.getElementById("text").value,
-        "SollKonto": document.getElementById("sollkonto").value,
-        "HabenKonto": document.getElementById("habenkonto").value,
-        "Betrag": document.getElementById("betrag").value
+        "Mandant": client,
+        "Belegnummer": form.querySelector("[name='Belegnummer']").value,
+        "Belegdatum": form.querySelector("[name='Belegdatum']").value,
+        "Text": form.querySelector("[name='Text']").value,
+        "SollKonto": form.querySelector("[name='SollKonto']").value,
+        "HabenKonto": form.querySelector("[name='HabenKonto']").value,
+        "Betrag": form.querySelector("[name='Betrag']").value
     };
 
     // Send data to server using Fetch API
@@ -292,10 +291,10 @@ function createBookingForm(booking) {
     for (const field of fields) {
         const label = document.createElement('label');
         label.innerText = field.label;
-        label.htmlFor = field.name;
+        label.htmlFor = field.name + "-" + formCount;
 
         const input = document.createElement('input');
-        input.id = field.name;
+        input.id = field.name + "-" + formCount;
         input.name = field.label;
         input.type = field.type;
         input.value = field.value;
