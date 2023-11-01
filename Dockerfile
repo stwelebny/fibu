@@ -24,11 +24,13 @@ COPY ./addBooking.cpp /usr/local/apache2/cgi-bin/
 COPY ./account.cpp /usr/local/apache2/cgi-bin/
 COPY ./balanceList.cpp /usr/local/apache2/cgi-bin/
 COPY ./balanceReport.cpp /usr/local/apache2/cgi-bin/
+COPY ./journalReport.cpp /usr/local/apache2/cgi-bin/
 
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/addBooking.cpp -o /usr/local/apache2/cgi-bin/addBooking -lcgicc -ljsoncpp
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/account.cpp -o /usr/local/apache2/cgi-bin/account -lcgicc -ljsoncpp
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/balanceList.cpp -o /usr/local/apache2/cgi-bin/balanceList -lcgicc -ljsoncpp
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/balanceReport.cpp -o /usr/local/apache2/cgi-bin/balanceReport -lcgicc -ljsoncpp
+RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/journalReport.cpp -o /usr/local/apache2/cgi-bin/journalReport -lcgicc -ljsoncpp
 
 # Make the CGI script executable
 RUN chmod +x /usr/local/apache2/cgi-bin/addBooking

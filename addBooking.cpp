@@ -27,9 +27,87 @@ void writeToLog(const std::string &message) {
 
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
+#include <fcntl.h>
 
 int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
+    writeToLog("appendToJsonArrayFilei: " + new_json_data);
+
+    int fd = open(filename.c_str(), O_RDWR | O_CREAT, 0666); // Open or create file with rw-rw-rw- permissions
+    if (fd == -1) {
+        std::cerr << "Failed to open the file!" << std::endl;
+        return 0;
+    }
+
+    // Lock the file
+    struct flock fl;
+    fl.l_type   = F_WRLCK;  // F_RDLCK, F_WRLCK, F_UNLCK
+    fl.l_whence = SEEK_SET; // SEEK_SET, SEEK_CUR, SEEK_END
+    fl.l_start  = 0;        // Offset from l_whence
+    fl.l_len    = 0;        // length, 0 = to EOF
+    fl.l_pid    = getpid(); // our PID
+
+    if (fcntl(fd, F_SETLKW, &fl) == -1) {
+        std::cerr << "Failed to lock the file!" << std::endl;
+        close(fd);
+        return 0;
+    }
+
+    std::fstream file;
+    file.open(filename, std::ios::in | std::ios::out | std::ios::ate);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file with fstream!" << std::endl;
+        return 0;
+    }
+
+    // Check if the file is empty
+    if (file.tellg() == 0) {
+        // If the file is empty, initialize it with the new JSON data enclosed in square brackets
+        file << "[\n" << new_json_data << "\n]";
+    } else {
+        // If the file is not empty, move two characters backward (to overwrite the closing bracket)
+        file.seekp(-2, std::ios::end);
+
+        // Append a comma, the new JSON data, and then the closing bracket
+        file << ",\n" << new_json_data << "\n]";
+    }
+
+    file.close();
+
+    // Unlock the file
+    fl.l_type = F_UNLCK;
+    if (fcntl(fd, F_SETLK, &fl) == -1) {
+        std::cerr << "Failed to unlock the file!" << std::endl;
+    }
+
+    close(fd);
+
+    return 1;
+}
+
+/*
+int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
     std::fstream file(filename, std::ios::in | std::ios::out | std::ios::ate);
+
+    writeToLog("appendToJsonArrayFilei: " + new_json_data);
+    int fd = open(filename.c_str(), O_RDWR | O_CREAT, 0666); // Open or create file with rw-rw-rw- permissions
+    if (fd == -1) {
+        std::cerr << "Failed to open the file!" << std::endl;
+        return 0;
+    }
+    // Lock the file
+    struct flock fl;
+    fl.l_type   = F_WRLCK;  // F_RDLCK, F_WRLCK, F_UNLCK
+    fl.l_whence = SEEK_SET; // SEEK_SET, SEEK_CUR, SEEK_END
+    fl.l_start  = 0;        // Offset from l_whence
+    fl.l_len    = 0;        // length, 0 = to EOF
+    fl.l_pid    = getpid(); // our PID
+
+    if (fcntl(fd, F_SETLKW, &fl) == -1) {
+            std::cerr << "Failed to lock the file!" << std::endl;
+            close(fd);
+            return 0;
+    }
     
     if (!file.is_open()) {
         std::cerr << "Failed to open the file!" << std::endl;
@@ -47,11 +125,18 @@ int appendToJsonArrayFile(const std::string& filename, const std::string& new_js
         // Append a comma, the new JSON data, and then the closing bracket
         file << ",\n" << new_json_data << "\n]";
     }
+    // Unlock the file
+    fl.l_type = F_UNLCK;
+    if (fcntl(fd, F_SETLK, &fl) == -1) {
+        std::cerr << "Failed to unlock the file!" << std::endl;
+    }
 
     file.close();
+    close(fd);
+
     return 1;
 }
-
+*/
 
 /*
 int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {

@@ -189,6 +189,47 @@ function displayData(data) {
 }
 
 
+function displayJournalData(data) {
+    const tableBody = document.getElementById('journalDetails');
+    tableBody.innerHTML = ''; // Clear any previous data
+
+    data.forEach(entry => {
+        const tableRow = document.createElement('tr');
+
+        tableRow.innerHTML = `
+            <td>${entry.Belegdatum}</td>
+            <td>${entry.Belegnummer}</td>
+            <td>${entry.SollKonto}</td>
+            <td>${entry.HabenKonto}</td>
+            <td>${entry.Text}</td>
+            <td style="text-align: right;">${formatCurrencyValue(entry["Betrag"])}</td>
+        `;
+
+        tableBody.appendChild(tableRow);
+    });
+}
+
+function fetchJournalData() {
+    const client = getCookie('mandant');
+
+    if (!client) {
+        alert('Bitte einen Mandanten angeben!');
+        return;
+    }
+
+    // Make an AJAX call to the CGI script
+    fetch(`./cgi-bin/journalReport?client=${client}`)
+        .then(response => response.json())
+        .then(data => {
+            displayJournalData(data);
+        })
+        .catch(error => {
+            console.error('Fehler bei der Journalabfrage', error);
+        });
+}
+
+
+
 function fetchBalanceList() {
 
     const client = getCookie('mandant');
@@ -316,12 +357,12 @@ function createBookingForm(booking) {
     return form;
 }
 
-function submitForms() {
+async function submitForms() {
     const forms = document.querySelectorAll('[id^="bookingForm-"]');
 
-    forms.forEach(form => {
-        submitForm(form);
-    });
+    for (const form of forms) {
+        await submitForm(form);
+    }
 }
 
 
