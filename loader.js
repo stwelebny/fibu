@@ -1,41 +1,64 @@
 // Function to load content from a URL into a container
 
+function submitForm(form) { 
+     client = document.getElementById("mandant").value;
+     if (!client) {
+         alert('Bitte einen Mandanten angeben!');
+         return;
+    }
+    // Extract values from form
+    let formData = {
+        "Mandant": document.getElementById("mandant").value,
+        "Belegnummer": document.getElementById("belegnummer").value,
+        "Belegdatum": document.getElementById("belegdatum").value,
+        "Text": document.getElementById("text").value,
+        "SollKonto": document.getElementById("sollkonto").value,
+        "HabenKonto": document.getElementById("habenkonto").value,
+        "Betrag": document.getElementById("betrag").value
+    };
+
+    // Send data to server using Fetch API
+    fetch('/cgi-bin/addBooking', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        displaySubmissionResult(form, data);
+        // alert(data.message); // Display message
+    })
+    .catch((error) => {
+        displaySubmissionError(form);
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+function displaySubmissionResult(form, data) {
+    const resultDiv = document.createElement('div');
+    const bookingData = Array.from(form.elements).map(element => element.value).join(", ");
+
+    resultDiv.innerText = bookingData;
+    resultDiv.style.color = 'grey';
+
+    form.parentNode.insertBefore(resultDiv, form.nextSibling);
+}
+
+function displaySubmissionError(form) {
+    const errorDiv = document.createElement('div');
+    errorDiv.innerText = "Error submitting the form.";
+    errorDiv.style.color = 'red';
+
+    form.parentNode.insertBefore(errorDiv, form.nextSibling);
+}
+
 function setupFormSubmission() {
     document.getElementById("bookingForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-         client = document.getElementById("mandant").value;
-         if (!client) {
-             alert('Bitte einen Mandanten angeben!');
-             return;
-        }
-        // Extract values from form
-        let formData = {
-            "Mandant": document.getElementById("mandant").value,
-            "Belegnummer": document.getElementById("belegnummer").value,
-            "Belegdatum": document.getElementById("belegdatum").value,
-            "Text": document.getElementById("text").value,
-            "SollKonto": document.getElementById("sollkonto").value,
-            "HabenKonto": document.getElementById("habenkonto").value,
-            "Betrag": document.getElementById("betrag").value
-        };
-
-        // Send data to server using Fetch API
-        fetch('/cgi-bin/addBooking', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message); // Display success/error message
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
+        event.preventDefault();
+        submitForm(event.target);
     });
 }
 
@@ -203,3 +226,105 @@ function displayBalanceList(data) {
         tableBody.appendChild(tableRow);
     });
 }
+
+
+function handleCSVImport() {
+    const fileInput = document.getElementById('csvFileInput');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert('Please select a CSV file to import.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsText(file);
+
+    reader.onload = function(event) {
+        const csvData = event.target.result;
+        const rows = csvData.split('\n')
+            .filter(row => row.trim().length > 0);
+        const bookings = rows.map(row => {
+            const columns = row.split(',').map(column => {
+                return column.replace(/^"|"$/g, ''); // Remove quotes if they exist
+            });
+            return {
+                belegnummer: columns[0],
+                belegdatum: columns[1],
+                text: columns[2],
+                sollkonto: columns[3],
+                habenkonto: columns[4],
+                betrag: columns[5]
+            };
+        });
+
+        for (const booking of bookings) {
+            const form = createBookingForm(booking);
+            form.addEventListener('submit', function(event) {
+                console.log("Form submit event listener triggered.");
+                event.preventDefault();
+                event.stopPropagation();
+                submitForm(event.target);
+            });
+            document.getElementById('multiBookingFormsContainer').appendChild(form);
+        }
+        console.log(document.querySelectorAll('.bookingForm').length + " forms appended.");
+    };
+}
+
+let formCount = 0; // Global counter to track form IDs
+
+function createBookingForm(booking) {
+    const form = document.createElement('form');
+    form.classList.add('bookingForm');
+    form.id = 'bookingForm-' + formCount;
+    formCount++;
+
+    const fields = [
+        { label: 'Belegnummer', name: 'belegnummer', type: 'text', value: booking.belegnummer },
+        { label: 'Belegdatum', name: 'belegdatum', type: 'date', value: booking.belegdatum },
+        { label: 'Text', name: 'text', type: 'text', value: booking.text },
+        { label: 'SollKonto', name: 'sollkonto', type: 'text', value: booking.sollkonto },
+        { label: 'HabenKonto', name: 'habenkonto', type: 'text', value: booking.habenkonto },
+        { label: 'Betrag', name: 'betrag', type: 'number', value: booking.betrag }
+    ];
+
+    for (const field of fields) {
+        const label = document.createElement('label');
+        label.innerText = field.label;
+        label.htmlFor = field.name;
+
+        const input = document.createElement('input');
+        input.id = field.name;
+        input.name = field.label;
+        input.type = field.type;
+        input.value = field.value;
+
+        form.appendChild(label);
+        form.appendChild(input);
+    }
+
+    const submitButton = document.createElement('input');
+    submitButton.type = 'submit';
+    submitButton.value = 'Buchen';
+    submitButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      console.log("Submit button clicked for form:", form.id);
+      submitForm(form);
+    });
+    form.appendChild(submitButton);
+
+    return form;
+}
+
+function submitForms() {
+    const forms = document.querySelectorAll('[id^="bookingForm-"]');
+
+    forms.forEach(form => {
+        submitForm(form);
+    });
+}
+
+
+
+
