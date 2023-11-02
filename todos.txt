@@ -1,0 +1,18 @@
+Validierung Buchungssatz in addBooking 0.5
+md5 Blockchain und Journal Konsistenzcheck 0.5
+Unit Tests 0.5
+BAO Export 0.5
+Bankimport 3
+Bilanz u GuV Asugabeformat .5
+Datenübernahme Import 2
+UVA 3
+Belegdatenerkennung 5 
+Buchungs AI Bank 5
+Buchungs AI ER 5
+Buchungs AI AR 5
+Buchungs AI BarBelege 5
+OCR 5
+Doku 1
+OpenID Authenticatiion 3
+
+44.5

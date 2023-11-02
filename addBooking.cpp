@@ -7,7 +7,9 @@
 #include <sstream>
 #include <iterator>
 #include <cstdlib>
-
+#include <map>
+#include <regex>
+#include <stdexcept>
 
 std::string getCurrentTimeStamp() {
     auto t = std::time(nullptr);
@@ -85,91 +87,36 @@ int appendToJsonArrayFile(const std::string& filename, const std::string& new_js
     return 1;
 }
 
-/*
-int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
-    std::fstream file(filename, std::ios::in | std::ios::out | std::ios::ate);
+void validateEntry(const Json::Value& entry) {
+    // Define regex patterns for date and monetary amount
+    std::regex datePattern(R"(^\d{4}-\d{2}-\d{2}$)"); // YYYY-MM-DD format
+    std::regex amountPattern(R"(^\d+(\.\d{2})?$)"); // Numeric with two decimal places
 
-    writeToLog("appendToJsonArrayFilei: " + new_json_data);
-    int fd = open(filename.c_str(), O_RDWR | O_CREAT, 0666); // Open or create file with rw-rw-rw- permissions
-    if (fd == -1) {
-        std::cerr << "Failed to open the file!" << std::endl;
-        return 0;
-    }
-    // Lock the file
-    struct flock fl;
-    fl.l_type   = F_WRLCK;  // F_RDLCK, F_WRLCK, F_UNLCK
-    fl.l_whence = SEEK_SET; // SEEK_SET, SEEK_CUR, SEEK_END
-    fl.l_start  = 0;        // Offset from l_whence
-    fl.l_len    = 0;        // length, 0 = to EOF
-    fl.l_pid    = getpid(); // our PID
+    // List of required keys
+    const std::vector<std::string> requiredKeys = {
+        "Belegdatum", "Belegnummer", "Mandant", "Text", "SollKonto", "HabenKonto", "Betrag"
+    };
 
-    if (fcntl(fd, F_SETLKW, &fl) == -1) {
-            std::cerr << "Failed to lock the file!" << std::endl;
-            close(fd);
-            return 0;
+    for (const auto& key : requiredKeys) {
+        // Check if the key exists and is not null
+        if (!entry.isMember(key) || entry[key].isNull()) {
+            throw std::invalid_argument("Der Schlüssel '" + key + "' fehlt oder ist null.");
+        }
+        // Convert the JSON value to string and check if it's empty
+        std::string value = entry[key].asString();
+        if (value.empty()) {
+            throw std::invalid_argument("Der Wert für '" + key + "' ist leer.");
+        }
+        // Validate date format
+        if (key == "Belegdatum" && !std::regex_match(value, datePattern)) {
+            throw std::invalid_argument("Das Datum '" + value + "' hat ein ungültiges Format. Erwartet: JJJJ-MM-TT.");
+        }
+        // Validate monetary amount format
+        if (key == "Betrag" && !std::regex_match(value, amountPattern)) {
+            throw std::invalid_argument("Der Betrag '" + value + "' hat ein ungültiges Format. Erwartet: Zahl mit zwei Dezimalstellen.");
+        }
     }
-    
-    if (!file.is_open()) {
-        std::cerr << "Failed to open the file!" << std::endl;
-        return 0;
-    }
-
-    // Check if the file is empty
-    if (file.tellg() == 0) {
-        // If the file is empty, initialize it with the new JSON data enclosed in square brackets
-        file << "[\n" << new_json_data << "\n]";
-    } else {
-        // If the file is not empty, move two characters backward (to overwrite the closing bracket)
-        file.seekp(-2, std::ios::end);
-        
-        // Append a comma, the new JSON data, and then the closing bracket
-        file << ",\n" << new_json_data << "\n]";
-    }
-    // Unlock the file
-    fl.l_type = F_UNLCK;
-    if (fcntl(fd, F_SETLK, &fl) == -1) {
-        std::cerr << "Failed to unlock the file!" << std::endl;
-    }
-
-    file.close();
-    close(fd);
-
-    return 1;
 }
-*/
-
-/*
-int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
-    std::fstream file(filename, std::ios::in | std::ios::out);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open the file!" << std::endl;
-        return  0;
-    }
-
-    // If the file is empty, initialize it as an array
-    file.seekg(0, std::ios::end);
-    if (file.tellg() == 0) {
-        file << "[\n]";
-    }
-
-    // Seek to the end minus 2 positions
-    file.seekp(-2, std::ios::end);
-    char prevChar;
-    file.seekg(-2, std::ios::cur);
-
-    file.get(prevChar);
-    if (prevChar != '[') {
-        file << ",";
-    }
-    file << new_json_data << "\n]";
-
-    // Append the new JSON data
-    file << "," << new_json_data << "\n]";
-
-    file.close();
-    return 1;
-}
-*/
 
 int main() {
     writeToLog("addBooking");
@@ -206,6 +153,8 @@ int main() {
             throw std::runtime_error(errors);
         }
 
+        validateEntry(receivedData);
+
         // Add additional fields
         receivedData["TimeStamp"] = getCurrentTimeStamp();
         const char* username = std::getenv("REMOTE_USER");
@@ -237,13 +186,14 @@ int main() {
         }
     } catch (const std::exception& e) {
         std::string errorResponse = "{\"status\": \"error\", \"message\": \"" + std::string(e.what()) + "\"}";
-        std::cout << "Content-Length: " << errorResponse.length() << std::endl;
-        std::cout << "Content-type: application/json" << std::endl << std::endl;
+        std::cout << "Status: 400 Bad Request" << std::endl; // Send the HTTP status code
+        std::cout << "Content-Type: application/json" << std::endl;
+        std::cout << "Content-Length: " << errorResponse.length() << std::endl << std::endl;
         std::cout << errorResponse;
     }
+
     // After sending the JSON response
     std::cout.flush();
     writeToLog("before return");
     return 0;
 }
-

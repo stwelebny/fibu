@@ -24,15 +24,22 @@ function submitForm(form) {
         },
         body: JSON.stringify(formData)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) { // If the HTTP status code is not in the 200-299 range
+            // Try to parse the error message from the response
+            return response.json().then(errData => {
+                throw new Error(errData.message || 'Server error ' + response.status);
+            });
+        }
+        return response.json(); // Process the response if it's ok
+    })
     .then(data => {
         displaySubmissionResult(form, data);
-        // alert(data.message); // Display message
     })
     .catch((error) => {
-        displaySubmissionError(form);
+        // Pass only the error message to the displaySubmissionError function
+        displaySubmissionError(form, error.message);
         console.error('Error:', error);
-        alert('An error occurred. Please try again.');
     });
 }
 
@@ -40,15 +47,15 @@ function displaySubmissionResult(form, data) {
     const resultDiv = document.createElement('div');
     const bookingData = Array.from(form.elements).map(element => element.value).join(", ");
 
-    resultDiv.innerText = bookingData;
+    resultDiv.innerText = bookingData + " OK";
     resultDiv.style.color = 'grey';
 
     form.parentNode.insertBefore(resultDiv, form.nextSibling);
 }
 
-function displaySubmissionError(form) {
+function displaySubmissionError(form, error) {
     const errorDiv = document.createElement('div');
-    errorDiv.innerText = "Error submitting the form.";
+    errorDiv.innerText = error;
     errorDiv.style.color = 'red';
 
     form.parentNode.insertBefore(errorDiv, form.nextSibling);
