@@ -216,6 +216,32 @@ function displayJournalData(data) {
     });
 }
 
+function displayJournalCheck(data) {
+    const resultDiv = document.getElementById('journalCheckResult');
+    resultDiv .innerHTML = data.message; 
+}
+
+function checkConsistency() {
+    const client = getCookie('mandant');
+
+    if (!client) {
+        alert('Bitte einen Mandanten angeben!');
+        return;
+    }
+
+    // Make an AJAX call to the CGI script
+    fetch(`./cgi-bin/verifyJournal?client=${client}`)
+        .then(response => response.json())
+        .then(data => {
+            displayJournalCheck(data);
+        })
+        .catch(error => {
+            console.error('Fehler bei der Server-Abfrage', error);
+        });
+}
+
+
+
 function fetchJournalData() {
     const client = getCookie('mandant');
 

@@ -10,6 +10,9 @@
 #include <map>
 #include <regex>
 #include <stdexcept>
+#include <unistd.h>
+#include <fcntl.h>
+#include "hash.h"
 
 std::string getCurrentTimeStamp() {
     auto t = std::time(nullptr);
@@ -27,13 +30,42 @@ void writeToLog(const std::string &message) {
     }
 }
 
-#include <iostream>
-#include <fstream>
-#include <unistd.h>
-#include <fcntl.h>
 
-int appendToJsonArrayFile(const std::string& filename, const std::string& new_json_data) {
-    writeToLog("appendToJsonArrayFilei: " + new_json_data);
+
+std::string getLastHash(std::string& client) {
+    std::ifstream infile("/fibudata/"+client+"-bookingsHash");
+    std::string hash;
+    if (!infile) {
+        // No existing hash file, start with a default value or create an initial block
+        hash = "initial hash value"; // This should be the hash of an initial block
+    } else {
+        std::getline(infile, hash); // Assume each file contains a single hash
+    }
+    return hash;
+}
+
+void saveNewHash(const std::string& hash, std::string client) {
+    std::ofstream outfile("/fibudata/"+client+"-bookingsHash");
+    outfile << hash;
+}
+
+void addHash(Json::Value& booking, std::string& client) {
+    std::string lastHash = getLastHash(client);
+    booking["previousHash"] = lastHash;
+
+    // Serialize the booking to a string and calculate its hash
+    Json::StreamWriterBuilder builder;
+    const std::string bookingData = Json::writeString(builder, booking);
+    writeToLog("addHash - bookingData :" + bookingData);
+    std::string newHash = calculateSHA256(bookingData);
+
+    // Save the new hash for the next block
+    saveNewHash(newHash, client);
+}
+
+
+
+int appendToJsonArrayFile(const std::string& filename, std::string& client, Json::Value& receivedData) {
 
     int fd = open(filename.c_str(), O_RDWR | O_CREAT, 0666); // Open or create file with rw-rw-rw- permissions
     if (fd == -1) {
@@ -55,6 +87,9 @@ int appendToJsonArrayFile(const std::string& filename, const std::string& new_js
         return 0;
     }
 
+    addHash(receivedData, client);
+    const std::string new_json_data = receivedData.toStyledString();
+    writeToLog("appendToJsonArrayFilei: " + new_json_data);
     std::fstream file;
     file.open(filename, std::ios::in | std::ios::out | std::ios::ate);
     if (!file.is_open()) {
@@ -155,6 +190,8 @@ int main() {
 
         validateEntry(receivedData);
 
+        std::string client = receivedData["Mandant"].asString();
+
         // Add additional fields
         receivedData["TimeStamp"] = getCurrentTimeStamp();
         const char* username = std::getenv("REMOTE_USER");
@@ -168,10 +205,10 @@ int main() {
             receivedData["User"] = "";
         }
 
-        std::string client = receivedData["Mandant"].asString();
+
         // Append the data to bookings.json
         std::ofstream file("/fibudata/"+client+"-bookings.json", std::ios_base::app);
-        if(appendToJsonArrayFile("/fibudata/"+client+"-bookings.json", receivedData.toStyledString())){
+        if(appendToJsonArrayFile("/fibudata/"+client+"-bookings.json", client, receivedData)){
             std::string responseBody = "{\"status\": \"success\", \"message\": \"Booking added successfully!\"}";
             std::cout << "Content-Length: " << responseBody.size() << "\r\n";
             std::cout << "Content-type: application/json; charset=utf-8\r\n";
