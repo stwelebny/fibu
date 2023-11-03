@@ -398,6 +398,99 @@ async function submitForms() {
     }
 }
 
+function handleBankImport() {
+    const accountNumber = document.getElementById('accountNumber').value;      
+    const belegNumber = document.getElementById('belegNumber').value;      
+    const fileInput = document.getElementById('csvFileInput');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert('Bitte eine .csv Datei zum Upload auswählen.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function(event) {
+        const csvData = event.target.result;
+        const rows = csvData.split('\n').filter(row => row.trim().length > 0);
+        
+        // Parse the header row to get the indices
+        const headers = parseCsvRow(rows[0]);
+        const headerMapping = {
+            belegdatum: headers.indexOf("Buchungsdatum"),
+            betrag: headers.indexOf("Betrag"),
+            text: headers.indexOf("Partnername"), // We will append Buchungs-Details later
+            details: headers.indexOf("Buchungs-Details")
+        };
+
+        // Remove the header row
+        rows.shift();
+
+        const bookings = rows.map(row => {
+            const columns = parseCsvRow(row);
+
+            // Convert Betrag to a number and determine SollKonto and HabenKonto
+            let betrag = parseFloat(columns[headerMapping.betrag].replace(',', '.').replace(/[^\d.-]/g, ''));
+            let sollKonto = betrag > 0 ? accountNumber : '';
+            let habenKonto = betrag < 0 ? accountNumber : '';
+            betrag = Math.abs(betrag);
+
+            // Format the date
+            const dateParts = columns[headerMapping.belegdatum].split('.');
+            const belegdatum = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Format to YYYY-MM-DD
+
+            // Here, combine 'Partnername' and 'Buchungs-Details'
+            const text = columns[headerMapping.text] + "/" + columns[headerMapping.details];
+            
+            return {
+                belegnummer: belegNumber,
+                belegdatum: belegdatum,
+                betrag: betrag.toFixed(2),
+                text: text, // No need to remove quotes here; parseCsvRow does that
+                sollkonto: sollKonto,
+                habenkonto: habenKonto
+            };
+        });
+        for (const booking of bookings) {
+            const form = createBookingForm(booking);
+            form.addEventListener('submit', function(event) {
+                console.log("Form submit event listener triggered.");
+                event.preventDefault();
+                event.stopPropagation();
+                submitForm(event.target);
+            });
+            document.getElementById('multiBookingFormsContainer').appendChild(form);
+        }
+        console.log(document.querySelectorAll('.bookingForm').length + " forms appended.");
+    };
+}
+
+
+function parseCsvRow(row) {
+    let columns = [];
+    let currentCol = '';
+    let inQuotes = false;
+    let prevChar = '';
+
+    for (let char of row) {
+        if (char === '"' && prevChar !== '\\') {
+            inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+            // End of the current column
+            columns.push(currentCol);
+            currentCol = '';
+        } else {
+            currentCol += char;
+        }
+        prevChar = char;
+    }
+    // Push the last column, as it wouldn't be followed by a comma
+    columns.push(currentCol);
+
+    // Remove quotes at the start and end of each column, if they exist
+    return columns.map(column => column.replace(/^"|"$/g, '').trim());
+}
 
 
 

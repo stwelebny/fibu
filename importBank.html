@@ -1,10 +1,13 @@
 <div class="form-container">
-    <h2>Stabelbuchen</h2>
-
+    <h2>Bankkontoauszug Import</h2>
+    <label for="accountNumber">Bank Kontonummer:</label>
+    <input type="text" id="accountNumber">
+    <label for="belegNumber">Belegnummer</label>
+    <input type="text" id="belegNumber">
     <div id="importSection" style="display: block;">
         <h3>CSV Upload</h3>
         <input type="file" id="csvFileInput">
-        <button onclick="handleCSVImport()">Import CSV</button>
+        <button onclick="handleBankImport()">Import CSV</button>
         
         <!-- Container for Multiple Booking Forms from CSV Data -->
         <div id="multiBookingFormsContainer">
@@ -12,9 +15,8 @@
         </div>
 
         <!-- Optional Bulk Submit Button -->
-        <button onclick="submitForms()">alle buchen</button>
+        <button onclick="submitForms()">Alle buchen</button>
     </div>
 </div>
-
 <script>
 
