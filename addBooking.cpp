@@ -13,14 +13,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "hash.h"
+#include "logger.h"
 
-std::string getCurrentTimeStamp() {
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-    std::ostringstream oss;
-    oss << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
-    return oss.str();
-}
+
 
 void writeToLog(const std::string &message) {
     std::ofstream logFile("/fibudata/app_log.txt", std::ios_base::app);  // appending to the log file
@@ -154,6 +149,8 @@ void validateEntry(const Json::Value& entry) {
 }
 
 int main() {
+    Logger log("/fibudata/app_log.txt");
+
     writeToLog("addBooking");
     std::cout << "Access-Control-Allow-Origin: *" << std::endl;  // Allows any origin to access
     std::cout << "Access-Control-Allow-Methods: POST, GET, OPTIONS" << std::endl; // Allowed methods
@@ -204,7 +201,18 @@ int main() {
         } else {
             receivedData["User"] = "";
         }
+       
 
+        const char * vars[] = { "REMOTE_USER", "REMOTE_ADDR", "AUTH_TYPE", nullptr };
+
+        for (int i = 0; vars[i]; ++i) {
+            const char * value = getenv(vars[i]);
+            if (value) {
+                log << getCurrentTimeStamp() << " - " << vars[i] << ": " << value << std::endl;
+            } else {
+                log << getCurrentTimeStamp() << " - " << vars[i] << " is not set" << std::endl;
+            }
+        }
 
         // Append the data to bookings.json
         std::ofstream file("/fibudata/"+client+"-bookings.json", std::ios_base::app);

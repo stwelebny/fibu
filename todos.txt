@@ -1,4 +1,3 @@
-Bankimport 3
 Bilanz u GuV Asugabeformat .5
 Datenübernahme Import 2
 UVA 3
@@ -12,5 +11,3 @@ Unit Tests 0.5
 Doku 1
 OpenID Authenticatiion 3
 
-769e548cf57d54e5e5e7ff4a70477b6004da3caee505dc6843b444a83e3c90cd
-7fe669ed53fbc39aa170911de646738b02fdf882dc048ed02d0c365b82fdb400
