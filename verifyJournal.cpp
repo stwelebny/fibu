@@ -1,3 +1,11 @@
+
+/* Copyright (c) 2023 Stefan Welebny
+**
+** This file is part of [fibu], licensed under the MIT License.
+** For full terms see the included LICENSE file.
+**
+**/
+
 #include <jsoncpp/json/json.h>
 #include <iostream>
 #include <fstream>
