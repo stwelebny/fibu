@@ -61,19 +61,6 @@ RUN chmod +x /usr/local/apache2/cgi-bin/verifyJournal
 EXPOSE 80
 EXPOSE 443
 
-# Create an entrypoint script that will create a symbolic link
-RUN echo '#!/bin/sh' > /usr/local/bin/entrypoint.sh && \
-    echo 'if [ ! -L "/fibudata" ]; then' >> /usr/local/bin/entrypoint.sh && \
-    echo '  ln -s /mnt/fibudata /fibudata' >> /usr/local/bin/entrypoint.sh && \
-    echo 'fi' >> /usr/local/bin/entrypoint.sh && \
-    echo 'exec "$@"' >> /usr/local/bin/entrypoint.sh
-
-# Make the entrypoint script executable
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Set the entrypoint to the entrypoint script
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
 # Start Apache in the foreground
 CMD ["httpd-foreground"]
 
