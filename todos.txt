@@ -9,5 +9,4 @@ Buchungs AI BarBelege 5
 OCR 5
 Unit Tests 0.5
 Doku 1
-OpenID Authenticatiion 3
-
+Deploy
