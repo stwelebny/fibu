@@ -166,7 +166,7 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
             Json::Value threeDigits(Json::objectValue);
             threeDigits["name"] = item.name;
             threeDigits["entries"] = Json::Value(Json::arrayValue);
-            std::string upperLimit = "999";  // default to the highest possible value
+            std::string upperLimit = "Z";  
             if (idx +1 < structure.size() && structure[idx+1].type == "3Digits") {
                upperLimit = extractFirstNDigits(structure[idx+1].name, 3);
             } else if (idx +1 < structure.size() && structure[idx+1].type == "2Digits") {
@@ -175,7 +175,7 @@ Json::Value iterateThroughAccounts(const std::vector<StructureItem>& structure, 
                upperLimit = extractFirstNDigits(structure[idx+1].name, 1);
             }
             std::string currentStart = extractFirstNDigits(item.name, 3);
-            while (accountIt != accountsWithBalances.end() && currentStart <= accountIt->first && accountIt->first < upperLimit) {
+            while (accountIt != accountsWithBalances.end() && currentStart <= accountIt->first && (upperLimit == "Z" || accountIt->first < upperLimit)) {
                 Json::Value account(Json::objectValue);
                 writeToLog("balanceReport, iterateThroughAccounts"+accountIt->first);
                 account["account"] = accountIt->first;

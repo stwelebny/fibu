@@ -32,41 +32,47 @@ function renderBalanceSheetSection(section, container) {
     header.textContent = section.name;
     container.appendChild(header);
 
-    // Create a table for the entries
-    const table = document.createElement('table');
+    if (section.sollSum != 0 ||  section.habenSum != 0)
+    {
+        // Create a table for the entries
+        const table = document.createElement('table');
 
-    // Only add table headers if there are entries
-    if (section.entries && section.entries.length > 0) {
-        const thead = document.createElement('thead');
-        const headerRow = document.createElement('tr');
-        ['Konto', 'Soll-Saldo', 'Haben-Saldo'].forEach(header => {
-            const th = document.createElement('th');
-            th.textContent = header;
-            headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-        
-        const tbody = document.createElement('tbody');
-        section.entries.forEach(entry => {
-            const row = document.createElement('tr');
-            ['account', 'sollSaldo', 'habenSaldo'].forEach(field => {
-                const td = document.createElement('td');
-                td.textContent = entry[field];
-                row.appendChild(td);
+        // Only add table headers if there are entries
+        if (section.entries && section.entries.length > 0) {
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            ['Konto', 'Soll-Saldo', 'Haben-Saldo'].forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
             });
-            tbody.appendChild(row);
-        });
-        table.appendChild(tbody);
-        
-        container.appendChild(table);
-    }
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            const tbody = document.createElement('tbody');
+            section.entries.forEach(entry => {
+                const row = document.createElement('tr');
+                const td = document.createElement('td');
+                td.textContent = entry.account;
+                row.appendChild(td);
+                const td2 = document.createElement('td');
+                td2.textContent = parseFloat(entry.sollSaldo).toFixed(2);
+                row.appendChild(td2);
+                const td3 = document.createElement('td');
+                td3.textContent = parseFloat(entry.habenSaldo).toFixed(2);
+                row.appendChild(td3);
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            container.appendChild(table);
+        }
 
-    // Recursively render sub-classes
-    if (section.subClasses) {
-        section.subClasses.forEach(subClass => {
-            renderBalanceSheetSection(subClass, container);
-        });
+        // Recursively render sub-classes
+        if (section.subClasses) {
+            section.subClasses.forEach(subClass => {
+                renderBalanceSheetSection(subClass, container);
+            });
+        }
     }
 }
 
@@ -95,10 +101,10 @@ function renderBalanceSheet(data) {
      td.textContent = "";
      row.appendChild(td);
      const td2 = document.createElement('td');
-     td2.textContent = data.sollSaldo;
+     td2.textContent = parseFloat(data.sollSaldo).toFixed(2);
      row.appendChild(td2);
      const td3 = document.createElement('td');
-     td3.textContent = data.habenSaldo;
+     td3.textContent = parseFloat(data.habenSaldo).toFixed(2);
      row.appendChild(td3);
      tbody.appendChild(row);
      table.appendChild(tbody);
