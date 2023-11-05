@@ -28,12 +28,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function renderBalanceSheetSection(section, container) {
     // Create a header for the section
-    const header = document.createElement('h2');
-    header.textContent = section.name;
-    container.appendChild(header);
-
     if (section.sollSum != 0 ||  section.habenSum != 0)
     {
+        const header = document.createElement('h2');
+        header.textContent = section.name;
+        container.appendChild(header);
+
         // Create a table for the entries
         const table = document.createElement('table');
 
