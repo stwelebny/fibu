@@ -28,6 +28,8 @@ h2 {
     margin: 20mm auto; /* Adjust the margin values if needed */
 }
 
+.total-row { font-weight: bold; }
+
 /* Print-specific styles */
 @media print {
     button {

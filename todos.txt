@@ -1,12 +1,3 @@
-Bilanz u GuV Asugabeformat .5
-Datenübernahme Import 2
-UVA 3
-Belegdatenerkennung 5 
-Buchungs AI Bank 5
-Buchungs AI ER 5
-Buchungs AI AR 5
-Buchungs AI BarBelege 5
-OCR 5
-Unit Tests 0.5
-Doku 1
-Deploy
+Druck aller Konten
+Druck Journal, Paging in Journal
+Import Korrektur , u " in Feldern

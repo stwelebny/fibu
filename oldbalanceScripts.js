@@ -56,26 +56,13 @@ function renderBalanceSheetSection(section, container) {
                 td.textContent = entry.account;
                 row.appendChild(td);
                 const td2 = document.createElement('td');
-                td2.textContent = entry.sollSaldo == 0 ? '' : parseFloat(entry.sollSaldo).toFixed(2);
+                td2.textContent = parseFloat(entry.sollSaldo).toFixed(2);
                 row.appendChild(td2);
                 const td3 = document.createElement('td');
-                td3.textContent = entry.habenSaldo == 0 ? '' : parseFloat(entry.habenSaldo).toFixed(2);
+                td3.textContent = parseFloat(entry.habenSaldo).toFixed(2);
                 row.appendChild(td3);
                 tbody.appendChild(row);
             });
-            const row = document.createElement('tr');
-            row.className = 'total-row';
-            const td = document.createElement('td');
-            td.textContent = '';
-            row.appendChild(td);
-            const td2 = document.createElement('td');
-            td2.textContent = section.sollSum == 0 ? '' :  parseFloat(section.sollSum).toFixed(2);
-            row.appendChild(td2);
-            const td3 = document.createElement('td');
-            td3.textContent = section.habenSum == 0 ? '' : parseFloat(section.habenSum).toFixed(2);
-            row.appendChild(td3);
-            tbody.appendChild(row);
-
             table.appendChild(tbody);
             container.appendChild(table);
         }
