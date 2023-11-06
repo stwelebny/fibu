@@ -159,7 +159,7 @@ function fetchAccountData() {
     fetch(`./cgi-bin/account?client=${client}&accountnumber=${accountNumber}`)
         .then(response => response.json())
         .then(data => {
-            displayData(data);
+            displayData(data, 'accountDetails');
         })
         .catch(error => {
             console.error('Fehler bei der Kontoabfrage', error);
@@ -174,9 +174,8 @@ function formatCurrencyValue(value) {
     }).format(value);
 }
 
-
-function displayData(data) {
-    const tableBody = document.getElementById('accountDetails');
+function displayData(data, tableId) {
+    const tableBody = document.getElementById(tableId);
     tableBody.innerHTML = ''; // Clear any previous data
 
     data.forEach(entry => {
@@ -318,16 +317,17 @@ function handleCSVImport() {
         const rows = csvData.split('\n')
             .filter(row => row.trim().length > 0);
         const bookings = rows.map(row => {
-            const columns = row.split(',').map(column => {
-                return column.replace(/^"|"$/g, ''); // Remove quotes if they exist
-            });
+            const columns = parseCsvRow(row);
+          //  const columns = row.split(',').map(column => {
+          //      return column.replace(/^"|"$/g, ''); // Remove quotes if they exist
+          //  });
             return {
                 belegnummer: columns[0],
                 belegdatum: columns[1],
                 text: columns[2],
                 sollkonto: columns[3],
                 habenkonto: columns[4],
-                betrag: columns[5]
+                betrag: parseFloat(columns[5].replace(',', '.').replace(/[^\d.-]/g, ''))
             };
         });
 
@@ -491,6 +491,4 @@ function parseCsvRow(row) {
     // Remove quotes at the start and end of each column, if they exist
     return columns.map(column => column.replace(/^"|"$/g, '').trim());
 }
-
-
 

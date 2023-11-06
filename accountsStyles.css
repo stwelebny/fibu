@@ -1,0 +1,80 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+h2 {
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+#accountsContainer {
+    width: 210mm;
+    margin: 20mm auto; /* Adjust the margin values if needed */
+}
+
+#accountsContainer table {
+    width: 100%; /* Use 100% of the #accountsContainer width */
+    table-layout: fixed; /* Fixed table layout for better control */
+    border-collapse: collapse; /* Optional, for styling purposes */
+}
+
+#accountsContainer th,
+#accountsContainer td {
+    padding: 0.5em; /* Or any other value you see fit */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Apply a specific width to all th/td elements except the last one */
+#accountsContainer th:not(:last-child),
+#accountsContainer td:not(:last-child) {
+    white-space: nowrap; /* Keep content on a single line */
+    width: 1%; /* Set to a small percentage to make columns as narrow as content */
+}
+
+/* Allow the last th/td of each row to take up the remaining space */
+#accountsContainer th:last-child,
+#accountsContainer td:last-child {
+    white-space: normal; /* Allow text wrapping in the last column */
+    width: auto; /* Allow the last column to expand and fill the remaining space */
+}
+
+
+.total-row { font-weight: bold; }
+
+/* Print-specific styles */
+@media print {
+    button {
+        display: none; /* Hide the print button */
+    }
+
+    .print-container {
+        margin: 0;
+        width: 100%;
+    }
+
+    /* Optional: Add a page break after the main content to ensure footer starts on a new page */
+    main::after {
+        content: "";
+        display: table;
+        clear: both;
+        page-break-after: always;
+    }
+}

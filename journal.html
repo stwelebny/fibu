@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buchungsjournal</title>
+    <link rel="stylesheet" href="journalStyles.css">
+</head>
+<body>
+    <div id="journalContainer"></div>
+        <header>
+            <h2>Buchungsjournal</h2>   
+            <!-- Add any other header information or logo if needed -->
+        </header>
+        
+        <main>
+            <table id="journalTable">
+               <thead>
+                   <tr>
+                       <th>Datum</th>
+                       <th>Beleg Nummer</th>
+                      <th>SollKonto</th>
+                      <th>HabenKonto</th>
+                      <th>Text</th>
+                      <th>Betrag</th>
+                  </tr>
+              </thead>
+              <tbody id="journalDetails"></tbody>
+           </table>
+            <!-- Your balance sheet data table goes here -->
+        </main>
+        
+        <footer>
+            <!-- You can add a footer if needed, like page number, date, or any other reference -->
+        </footer>
+    </div>
+    <button onclick="window.print()">Print or Save as PDF</button>
+    <script src="journalScripts.js"></script>
+</body>
+</html>
