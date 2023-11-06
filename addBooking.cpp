@@ -128,7 +128,9 @@ int appendToJsonArrayFile(const std::string& filename, std::string& client, Json
 void validateEntry(const Json::Value& entry) {
     // Define regex patterns for date and monetary amount
     std::regex datePattern(R"(^\d{4}-\d{2}-\d{2}$)"); // YYYY-MM-DD format
-    std::regex amountPattern(R"(^\d+(\.\d{2})?$)"); // Numeric with two decimal places
+//    std::regex amountPattern(R"(^\d+(\.\d{2})?$)"); // Numeric with two decimal places
+    std::regex amountPattern(R"(^-?\d+(\.\d{2})?$)");
+
 
     // List of required keys
     const std::vector<std::string> requiredKeys = {

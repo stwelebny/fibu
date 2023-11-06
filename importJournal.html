@@ -1,0 +1,20 @@
+<div class="form-container">
+    <h2>Journal Import</h2>
+    <label for="accountNumber">Evidenzkonto:</label>
+    <input type="text" id="accountNumber">
+    <div id="importSection" style="display: block;">
+        <h3>CSV Upload</h3>
+        <input type="file" id="csvFileInput">
+        <button onclick="handleJournalImport()">Journal importieren</button>
+        
+        <!-- Container for Multiple Booking Forms from CSV Data -->
+        <div id="multiBookingFormsContainer">
+            <!-- Individual booking forms will be added dynamically based on CSV data -->
+        </div>
+
+        <!-- Optional Bulk Submit Button -->
+        <button onclick="submitForms()">Alle buchen</button>
+    </div>
+</div>
+<script>
+

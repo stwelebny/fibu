@@ -321,13 +321,15 @@ function handleCSVImport() {
           //  const columns = row.split(',').map(column => {
           //      return column.replace(/^"|"$/g, ''); // Remove quotes if they exist
           //  });
+            let formattedNumber = columns[5].replace('.', '').replace(',', '.');
             return {
                 belegnummer: columns[0],
                 belegdatum: columns[1],
                 text: columns[2],
                 sollkonto: columns[3],
                 habenkonto: columns[4],
-                betrag: parseFloat(columns[5].replace(',', '.').replace(/[^\d.-]/g, ''))
+                betrag: parseFloat(formattedNumber)
+                // betrag: parseFloat(columns[5].replace(',', '.').replace(/[^\d.-]/g, ''))
             };
         });
 
@@ -431,7 +433,10 @@ function handleBankImport() {
             const columns = parseCsvRow(row);
 
             // Convert Betrag to a number and determine SollKonto and HabenKonto
-            let betrag = parseFloat(columns[headerMapping.betrag].replace(',', '.').replace(/[^\d.-]/g, ''));
+            let formattedNumber = columns[headerMapping.betrag].replace('.', '').replace(',', '.');
+             let betrag = parseFloat(formattedNumber);
+
+            // let betrag = parseFloat(columns[headerMapping.betrag].replace(',', '.').replace(/[^\d.-]/g, ''));
             let sollKonto = betrag > 0 ? accountNumber : '';
             let habenKonto = betrag < 0 ? accountNumber : '';
             betrag = Math.abs(betrag);
@@ -466,7 +471,32 @@ function handleBankImport() {
     };
 }
 
+function parseCsvRow(row, separator = ',') {
+    let columns = [];
+    let currentCol = '';
+    let inQuotes = false;
+    let prevChar = '';
 
+    for (let char of row) {
+        if (char === '"' && prevChar !== '\\') {
+            inQuotes = !inQuotes;
+        } else if (char === separator && !inQuotes) {
+            // End of the current column
+            columns.push(currentCol);
+            currentCol = '';
+        } else {
+            currentCol += char;
+        }
+        prevChar = char;
+    }
+    // Push the last column, as it wouldn't be followed by a separator
+    columns.push(currentCol);
+
+    // Remove quotes at the start and end of each column, if they exist
+    return columns.map(column => column.replace(/^"|"$/g, '').trim());
+}
+
+/*
 function parseCsvRow(row) {
     let columns = [];
     let currentCol = '';
@@ -490,5 +520,73 @@ function parseCsvRow(row) {
 
     // Remove quotes at the start and end of each column, if they exist
     return columns.map(column => column.replace(/^"|"$/g, '').trim());
+}
+*/
+
+function handleJournalImport() {
+    const accountNumber = document.getElementById('accountNumber').value;
+    const fileInput = document.getElementById('csvFileInput');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert('Bitte eine .csv Datei zum Upload auswählen.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function(event) {
+        const csvData = event.target.result;
+        const rows = csvData.split('\n').filter(row => row.trim().length > 0);
+
+        const bookings = rows.map(row => {
+            const columns = parseCsvRow(row, '|');
+
+            let sollKonto = '';
+            let habenKonto = '';
+            // Convert Betrag to a number and determine SollKonto and HabenKonto
+            let formattedNumber = columns[6].replace('.', '').replace(',', '.');
+            let betrag = parseFloat(formattedNumber);
+
+ //           let betrag = parseFloat(columns[6].replace(',', '.').replace(/[^\d.-]/g, ''));
+            if (isNaN(betrag)) {
+                let formattedNumber = columns[7].replace('.', '').replace(',', '.');
+                betrag = parseFloat(formattedNumber);
+
+                // betrag = parseFloat(columns[7].replace(',', '.').replace(/[^\d.-]/g, ''));
+                habenKonto = columns[5];
+                sollKonto = accountNumber; 
+            } else {
+                sollKonto = columns[5];
+                habenKonto = accountNumber;
+            }
+            let belegnummer = columns[0] + ' ' + columns[1];
+            let text = columns[3] == "" ? "." : columns[3]
+
+            // Format the date
+            const dateParts = columns[2].split('.');
+            const belegdatum = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Format to YYYY-MM-DD
+
+            return {
+                belegnummer: belegnummer,
+                belegdatum: belegdatum,
+                betrag: betrag.toFixed(2),
+                text: text, // No need to remove quotes here; parseCsvRow does that
+                sollkonto: sollKonto,
+                habenkonto: habenKonto
+            };
+        });
+        for (const booking of bookings) {
+            const form = createBookingForm(booking);
+            form.addEventListener('submit', function(event) {
+                console.log("Form submit event listener triggered.");
+                event.preventDefault();
+                event.stopPropagation();
+                submitForm(event.target);
+            });
+            document.getElementById('multiBookingFormsContainer').appendChild(form);
+        }
+        console.log(document.querySelectorAll('.bookingForm').length + " forms appended.");
+    };
 }
 
