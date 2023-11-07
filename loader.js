@@ -590,3 +590,39 @@ function handleJournalImport() {
     };
 }
 
+function generateBAODownloadLink() {
+    const client = getCookie('mandant');
+    if (!client) {
+        alert('Bitte einen Mandanten angeben!');
+        return;
+    }
+
+    // Make an AJAX call to the CGI script
+    fetch(`./cgi-bin/journalReport?client=${client}`)
+        .then(response => response.json())
+        .then(data => {
+            let content = data.map(entry =>
+                `${entry.Belegdatum}|${entry.Belegnummer}|${entry.SollKonto}|${entry.HabenKonto}|${entry.Text}|${formatCurrencyValue(entry["Betrag"])}`).join('\n');
+
+            // Create the Blob object and the URL for it
+            const blob = new Blob([content], { type: 'text/plain' });
+            const downloadUrl = URL.createObjectURL(blob);
+
+            // Create the download link and click it programmatically to start download
+            const downloadLink = document.createElement('a');
+            downloadLink.href = downloadUrl;
+            downloadLink.download = `${client}_journal.txt`; // Name of the file to be downloaded
+            downloadLink.style.display = 'none'; // Hide the link
+
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+
+            // Clean up by removing the link and revoking the blob URL after the download starts
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(downloadUrl);
+        })
+        .catch(error => {
+            console.error('Fehler bei der Erstellung des Download-Links', error);
+        });
+}
+
