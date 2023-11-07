@@ -1,3 +1,25 @@
+
+let accounts = null;
+
+// Function to fetch and sort accounts
+function fetchAndSortAccounts(client) {
+  return  fetch(`/cgi-bin/clientAccounts.cgi?client=${client}`)
+    .then(response => response.json())
+    .then(data => {
+      // Sort the accounts by the account key
+      accounts = data.sort((a, b) => a.accountkey.localeCompare(b.accountkey));
+      return accounts; // Return the sorted accounts
+    });
+}
+
+// Function to get account name by key
+function getAccountNameByKey(accountKey) {
+  // Find the account with the given key
+  const account = accounts.find(acc => acc.accountkey === accountKey);
+  return account ? account.accountname : null; // Return the account name or null if not found
+}
+
+
 function getCookie(name) {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
@@ -12,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Bitte einen Mandanten angeben!');
         return;
     }
+    if (!accounts) fetchAndSortAccounts(client);
     displayAllAccountDetails(client);
 });
 
@@ -32,6 +55,7 @@ function displayAllAccountDetails(client) {
                     .then(accountDetails => {
                         // Now calling displayData with the correct tableId
                         displayData(accountDetails, `accountDetails${account.Konto}`);
+                        displaySaldi(account, `accountDetails${account.Konto}`);
                     })
                     .catch(error => {
                         console.error('Fehler beim Abrufen der Kontodetails', error);
@@ -47,8 +71,10 @@ function displayAccountHeadline(account) {
     let accountsContainer = document.getElementById('accountsContainer');
     let mainElement = document.querySelector('main');
 
+    let accountName = getAccountNameByKey(account.Konto);
+    accountName = accountName ? accountName : "";
     const accountHeadline = document.createElement('h2');
-    accountHeadline.textContent = `Konto: ${account.Konto}, Soll-Saldo: ${formatCurrencyValue(account["Soll-Saldo"])}, Haben-Saldo: ${formatCurrencyValue(account["Haben-Saldo"])}`;
+    accountHeadline.textContent = `Konto: ${account.Konto} ${accountName}`;
 
     mainElement.appendChild(accountHeadline);
 
@@ -92,4 +118,20 @@ function displayData(data, tableId) {
     });
 }
 
+
+function displaySaldi(account, tableId) {
+    const tableBody = document.getElementById(tableId);
+    const Soll = formatCurrencyValue(account["Soll-Saldo"]).trim();
+    const Haben = formatCurrencyValue(account["Haben-Saldo"]).trim();
+    const tableRow = document.createElement('tr');
+    tableRow.innerHTML = `
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="font-weight: bold; text-align: right;">${Soll}</td>
+        <td style="font-weight: bold; text-align: right;">${Haben}</td>
+        <td></td>
+    `;
+    tableBody.appendChild(tableRow);
+}
 

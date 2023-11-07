@@ -41,6 +41,7 @@ COPY ./journalReport.cpp /usr/local/apache2/cgi-bin/
 COPY ./hash.h /usr/local/apache2/cgi-bin/
 COPY ./verifyJournal.cpp /usr/local/apache2/cgi-bin/
 COPY ./logger.h /usr/local/apache2/cgi-bin/
+COPY ./clientAccounts.cgi /usr/local/apache2/cgi-bin/
 
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/addBooking.cpp -o /usr/local/apache2/cgi-bin/addBooking -lcgicc -ljsoncpp -lssl -lcrypto
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/account.cpp -o /usr/local/apache2/cgi-bin/account -lcgicc -ljsoncpp
@@ -56,6 +57,7 @@ RUN chmod +x /usr/local/apache2/cgi-bin/balanceList
 RUN chmod +x /usr/local/apache2/cgi-bin/balanceReport
 RUN chmod +x /usr/local/apache2/cgi-bin/journalReport
 RUN chmod +x /usr/local/apache2/cgi-bin/verifyJournal
+RUN chmod +x /usr/local/apache2/cgi-bin/clientAccounts.cgi
 
 # Expose HTTP and HTTPS ports
 EXPOSE 80

@@ -1,3 +1,25 @@
+let accounts = null;
+
+// Function to fetch and sort accounts
+function fetchAndSortAccounts(client) {
+  return  fetch(`/cgi-bin/clientAccounts.cgi?client=${client}`)
+    .then(response => response.json())
+    .then(data => {
+      // Sort the accounts by the account key
+      accounts = data.sort((a, b) => a.accountkey.localeCompare(b.accountkey));
+      return accounts; // Return the sorted accounts
+    });
+}
+
+// Function to get account name by key
+function getAccountNameByKey(accountKey) {
+  // Find the account with the given key
+  const account = accounts.find(acc => acc.accountkey === accountKey);
+  return account ? account.accountname : null; // Return the account name or null if not found
+}
+
+
+
 function getCookie(name) {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
@@ -11,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Bitte einen Mandanten angeben!');
         return;
     }
+    if (!accounts) fetchAndSortAccounts(client);
     fetch(`./cgi-bin/balanceReport?client=${client}`)
     .then(response => {
         if (!response.ok) {
@@ -53,7 +76,9 @@ function renderBalanceSheetSection(section, container) {
             section.entries.forEach(entry => {
                 const row = document.createElement('tr');
                 const td = document.createElement('td');
-                td.textContent = entry.account;
+                let accountName = getAccountNameByKey(entry.account);
+                accountName = accountName ? accountName : "";
+                td.textContent = entry.account + " " + accountName;
                 row.appendChild(td);
                 const td2 = document.createElement('td');
                 td2.textContent = entry.sollSaldo == 0 ? '' : parseFloat(entry.sollSaldo).toFixed(2);
@@ -91,6 +116,7 @@ function renderBalanceSheetSection(section, container) {
 
 function renderBalanceSheet(data) {
     const mainElement = document.querySelector('main');
+    
     data.KontenKlassen.forEach(section => {
         renderBalanceSheetSection(section, mainElement);
     });
@@ -124,3 +150,4 @@ function renderBalanceSheet(data) {
      mainElement.appendChild(table);
 
 }
+

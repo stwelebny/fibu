@@ -154,7 +154,13 @@ function fetchAccountData() {
         alert('Bitte einen Mandanten angeben!');
         return;
     }
-
+    if (!accounts) fetchAndSortAccounts(client);
+    let accountN = getAccountNameByKey(accountNumber);
+    accountN = accountN ? accountN : "";
+    const header = document.createElement('h2');
+    header.textContent = accountN;
+    const div = document.getElementById('accountName');
+    div.appendChild(header);
     // Make an AJAX call to the CGI script
     fetch(`./cgi-bin/account?client=${client}&accountnumber=${accountNumber}`)
         .then(response => response.json())
@@ -270,6 +276,7 @@ function fetchBalanceList() {
         return;
     }
 
+    if (!accounts) fetchAndSortAccounts(client);
     // Make an AJAX call to the CGI script
     fetch(`./cgi-bin/balanceList?client=${client}`)
         .then(response => response.json())
@@ -284,13 +291,13 @@ function fetchBalanceList() {
 function displayBalanceList(data) {
     const tableBody = document.getElementById('balanceListDetails');
     tableBody.innerHTML = ''; // Clear any previous data
-
     data.forEach(entry => {
         const tableRow = document.createElement('tr');
-
+        accountName = getAccountNameByKey(entry.Konto);
+        accountName = accountName ? accountName : "";
         tableRow.innerHTML = `
             <td>${entry.Konto}</td>
-            <td></td>
+            <td>${accountName}</td>
             <td style="text-align: right;">${formatCurrencyValue(entry["Soll-Saldo"])}</td>
             <td style="text-align: right;">${formatCurrencyValue(entry["Haben-Saldo"])}</td>
         `;
@@ -624,5 +631,89 @@ function generateBAODownloadLink() {
         .catch(error => {
             console.error('Fehler bei der Erstellung des Download-Links', error);
         });
+}
+
+
+function fetchAccounts() {
+  // Replace with your actual backend URL
+  const client = getCookie('mandant');
+  if (!client) {
+    alert('Bitte einen Mandanten angeben!');
+    return;
+  }
+  fetchAndSortAccounts(client).then(sortedAccounts => {
+      const accountsList = document.getElementById('accountsList');
+      accountsList.innerHTML = ''; // Clear current list
+      sortedAccounts.forEach(account => {
+        // Add each account to the form
+        const div = document.createElement('div');
+        div.innerHTML = `Kontonummer: <input type="text" class="account-key" value="${account.accountkey}" /> Kontenbezeichnung: <input type="text" class="account-name" value="${account.accountname}" /><br>`;
+
+        accountsList.appendChild(div);
+      });
+      addEmptyAccountRow();
+    });
+}
+
+function addEmptyAccountRow() {
+  const accountsList = document.getElementById('accountsList');
+  const div = document.createElement('div');
+  div.innerHTML = `Kontonummer: <input type="text" class="account-key" /> Kontenbezeichnung: <input type="text" class="account-name" /><br>`;
+  accountsList.appendChild(div);
+}
+
+function updateAccounts() {
+  const client = getCookie('mandant');
+  if (!client) {
+    alert('Bitte einen Mandanten angeben!');
+    return;
+  }
+  const accounts = [];
+  document.getElementById('accountsList').querySelectorAll('div').forEach(div => {
+    const keyInput = div.querySelector('.account-key');
+    const nameInput = div.querySelector('.account-name');
+    if (keyInput.value && nameInput.value) { // Only add non-empty accounts
+      accounts.push({
+        accountkey: keyInput.value,
+        accountname: nameInput.value
+      });
+    };
+  });
+
+  // Replace with your actual backend URL
+  fetch(`/cgi-bin/clientAccounts.cgi?client=${client}`, {
+    method: 'POST',
+    body: JSON.stringify(accounts),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      alert('Accounts updated successfully');
+      fetchAccounts(); 
+    } else {
+      alert('Failed to update accounts');
+    }
+  });
+}
+
+let accounts = [];
+
+// Function to fetch and sort accounts
+function fetchAndSortAccounts(client) {
+  return  fetch(`/cgi-bin/clientAccounts.cgi?client=${client}`)
+    .then(response => response.json())
+    .then(data => {
+      // Sort the accounts by the account key
+      accounts = data.sort((a, b) => a.accountkey.localeCompare(b.accountkey));
+      return accounts; // Return the sorted accounts
+    });
+}
+
+// Function to get account name by key
+function getAccountNameByKey(accountKey) {
+  // Find the account with the given key
+  const account = accounts.find(acc => acc.accountkey === accountKey);
+  return account ? account.accountname : null; // Return the account name or null if not found
 }
 
