@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
+backup.sh
+mirror.sh
 
 /cgi-bin/
 /fibudata/
