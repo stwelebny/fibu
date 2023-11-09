@@ -142,7 +142,7 @@ window.onload = () => {
     loadContent('bookingform.html', 'contentContainer', setupFormSubmission);
 };
 
-function fetchAccountData() {
+async function fetchAccountData() {
     const accountNumber = document.getElementById('accountNumber').value;
     const client = getCookie('mandant');
     if (!accountNumber) {
@@ -154,7 +154,7 @@ function fetchAccountData() {
         alert('Bitte einen Mandanten angeben!');
         return;
     }
-    if (!accounts) fetchAndSortAccounts(client);
+    if (!accounts) await fetchAndSortAccounts(client);
     let accountN = getAccountNameByKey(accountNumber);
     accountN = accountN ? accountN : "";
     const header = document.createElement('h2');
@@ -268,7 +268,7 @@ function fetchJournalData() {
 
 
 
-function fetchBalanceList() {
+async function fetchBalanceList() {
 
     const client = getCookie('mandant');
     if (!client) {
@@ -276,7 +276,7 @@ function fetchBalanceList() {
         return;
     }
 
-    if (!accounts) fetchAndSortAccounts(client);
+    if (!accounts) await fetchAndSortAccounts(client);
     // Make an AJAX call to the CGI script
     fetch(`./cgi-bin/balanceList?client=${client}`)
         .then(response => response.json())
@@ -697,7 +697,7 @@ function updateAccounts() {
   });
 }
 
-let accounts = [];
+let accounts = null;
 
 // Function to fetch and sort accounts
 function fetchAndSortAccounts(client) {

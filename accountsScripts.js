@@ -26,7 +26,7 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
 
 
     const client = getCookie('mandant');
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Bitte einen Mandanten angeben!');
         return;
     }
-    if (!accounts) fetchAndSortAccounts(client);
+    if (!accounts) await fetchAndSortAccounts(client);
     displayAllAccountDetails(client);
 });
 

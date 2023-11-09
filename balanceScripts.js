@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Bitte einen Mandanten angeben!');
         return;
     }
-    if (!accounts) fetchAndSortAccounts(client);
+    if (!accounts) await fetchAndSortAccounts(client);
     fetch(`./cgi-bin/balanceReport?client=${client}`)
     .then(response => {
         if (!response.ok) {
