@@ -205,6 +205,9 @@ int main() {
         if (!username) {
             username = std::getenv("HTTP_REMOTE_USER");
         }   
+        if (!username) {
+            username = std::getenv("REDIRECT_REMOTE_USER");
+        }   
         if (username) {
             writeToLog (username);
             receivedData["User"] = username; // Change this as per your requirements

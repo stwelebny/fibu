@@ -17,8 +17,18 @@ COPY *.css /usr/local/apache2/htdocs/
 COPY EinheitskontenrahmenOE.txt /app/
 
 # Enable CGI and copy Apache configurations
-COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
-
+#COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+# Enable CGI module. Uncomment the line below if using Apache 2.4 or later
+RUN sed -i 's/#LoadModule cgid_module modules\/mod_cgid.so/LoadModule cgid_module modules\/mod_cgid.so/' /usr/local/apache2/conf/httpd.conf
+# Enable execution of CGI scripts
+RUN echo '<Directory "/usr/local/apache2/cgi-bin">' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '    AllowOverride None' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '    Options +ExecCGI' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '    AuthType Basic' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '    AuthName "Restricted Area"' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '    AuthUserFile "/fibudata/.htpasswd"' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '    Require valid-user' >> /usr/local/apache2/conf/httpd.conf && \
+    echo '</Directory>' >> /usr/local/apache2/conf/httpd.conf
 
 # Create an Apache configuration file for basic auth
 
@@ -42,6 +52,7 @@ COPY ./hash.h /usr/local/apache2/cgi-bin/
 COPY ./verifyJournal.cpp /usr/local/apache2/cgi-bin/
 COPY ./logger.h /usr/local/apache2/cgi-bin/
 COPY ./clientAccounts.cgi /usr/local/apache2/cgi-bin/
+COPY ./environment.cgi /usr/local/apache2/cgi-bin/
 
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/addBooking.cpp -o /usr/local/apache2/cgi-bin/addBooking -lcgicc -ljsoncpp -lssl -lcrypto
 RUN g++ -std=c++17 /usr/local/apache2/cgi-bin/account.cpp -o /usr/local/apache2/cgi-bin/account -lcgicc -ljsoncpp
@@ -58,6 +69,7 @@ RUN chmod +x /usr/local/apache2/cgi-bin/balanceReport
 RUN chmod +x /usr/local/apache2/cgi-bin/journalReport
 RUN chmod +x /usr/local/apache2/cgi-bin/verifyJournal
 RUN chmod +x /usr/local/apache2/cgi-bin/clientAccounts.cgi
+RUN chmod +x /usr/local/apache2/cgi-bin/environment.cgi
 
 # Expose HTTP and HTTPS ports
 EXPOSE 80
